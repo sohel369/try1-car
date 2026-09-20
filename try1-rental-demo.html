@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -99,10 +99,38 @@
                 overflow: visible !important;
                 max-height: none !important;
             }
-            /* Reset page margins */
+            /* ── ONE PAGE FIT ── */
+            #printable-contract > div {
+                font-size: 7.8px !important;
+                padding: 6px !important;
+            }
+            #printable-contract table td,
+            #printable-contract table th {
+                padding: 1px 3px !important;
+                font-size: 7.5px !important;
+            }
+            #printable-contract p {
+                margin-bottom: 2px !important;
+                font-size: 7px !important;
+                line-height: 1.35 !important;
+            }
+            #printable-contract svg {
+                width: 120px !important;
+                height: 50px !important;
+            }
+            #printable-contract > div > div {
+                margin-bottom: 3px !important;
+            }
+            /* Prevent any section breaking across pages */
+            #printable-contract > div,
+            #printable-contract table,
+            #printable-contract > div > div {
+                page-break-inside: avoid !important;
+            }
+            /* Tight page margins */
             @page {
-                margin: 8mm;
-                size: A4;
+                margin: 4mm 5mm;
+                size: A4 portrait;
             }
         }
     </style>
@@ -1778,12 +1806,12 @@
 
             <!-- Scrollable Contract Body — Exact Paper Replica -->
             <div class="overflow-y-auto flex-1 bg-white" id="printable-contract">
-              <div style="font-family:Arial,sans-serif;font-size:10px;color:#111;padding:18px;max-width:800px;margin:0 auto;">
+              <div style="font-family:Arial,sans-serif;font-size:8.5px;color:#111;padding:8px;max-width:800px;margin:0 auto;">
 
                 <!-- HEADER -->
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #111;padding-bottom:8px;margin-bottom:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:5px;margin-bottom:5px;">
                   <div style="display:flex;align-items:center;gap:10px;">
-                    <div style="background:linear-gradient(135deg,#f5c400,#d48a00);border-radius:8px;padding:6px 14px;font-size:22px;font-weight:900;color:#1a1a1a;letter-spacing:3px;border:2px solid #b87000;box-shadow:0 2px 6px rgba(0,0,0,0.2);">TRY<span style="color:#fff;background:#111;padding:1px 4px;border-radius:3px;margin-left:2px;">1</span></div>
+                    <div style="background:linear-gradient(135deg,#f5c400,#d48a00);border-radius:6px;padding:4px 10px;font-size:18px;font-weight:900;color:#1a1a1a;letter-spacing:3px;border:2px solid #b87000;box-shadow:0 2px 6px rgba(0,0,0,0.2);">TRY<span style="color:#fff;background:#111;padding:1px 4px;border-radius:3px;margin-left:2px;">1</span></div>
                     <div>
                       <div style="font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;">West End Location</div>
                       <div style="font-size:9px;color:#555;margin-top:1px;">4501 Keele Street Unit 60</div>
@@ -1793,127 +1821,127 @@
                   </div>
                   <div style="text-align:right;">
                     <div style="font-size:9px;color:#888;margin-bottom:2px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">RA</div>
-                    <div style="font-size:28px;font-weight:900;color:#0369a1;letter-spacing:3px;line-height:1;">3291</div>
+                    <div style="font-size:22px;font-weight:900;color:#0369a1;letter-spacing:2px;line-height:1;">3291</div>
                     <div style="font-size:9px;font-weight:700;border:1.5px solid #111;padding:2px 8px;display:inline-block;margin-top:4px;letter-spacing:0.5px;">RENTAL AGREEMENT PAGE 1</div>
                   </div>
                 </div>
 
                 <!-- CUSTOMER + VEHICLE INFO GRID -->
-                <table style="width:100%;border-collapse:collapse;margin-bottom:5px;font-size:9px;">
+                <table style="width:100%;border-collapse:collapse;margin-bottom:3px;font-size:8px;">
                   <tr>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:24%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:24%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Customer Name</div>
                       <div style="font-weight:900;font-size:11px;">JOHNSON, PATRICK</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:14%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:14%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Province</div>
                       <div style="font-weight:700;">BC</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:12%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:12%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Vehicle #</div>
                       <div style="font-weight:900;color:#0369a1;">COR 01</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:12%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:12%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Plate #</div>
                       <div style="font-weight:700;font-family:monospace;">BC-8821</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:10%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:10%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Done By</div>
                       <div style="font-weight:700;">CS-04</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:14%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:14%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Res #</div>
                       <div style="font-weight:700;">RES-8849</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;width:14%;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;width:14%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Status</div>
                       <div style="font-weight:900;color:#16a34a;">&#9632; ACTIVE ON</div>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Street Address</div>
                       <div style="font-weight:700;">10926 102 ST NW, WestEnd</div>
                     </td>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Make / Model</div>
                       <div style="font-weight:700;">Toyota Corolla 2024</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Date Out</div>
                       <div style="font-weight:900;">09/17/26</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Time Out</div>
                       <div style="font-weight:700;">12:02</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">OUT</div>
                       <div style="font-weight:900;color:#0369a1;">OUT &#10003;</div>
                     </td>
                   </tr>
                   <tr>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">City</div>
                       <div style="font-weight:700;">Vancouver</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Prov</div>
                       <div style="font-weight:700;">BC</div>
                     </td>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Driver's License #</div>
                       <div style="font-weight:900;font-family:monospace;letter-spacing:1px;">BC-9920194-A</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Date Due</div>
                       <div style="font-weight:900;">09/24/26</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Time Due</div>
                       <div style="font-weight:700;">12:02</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">IN</div>
                       <div style="color:#bbb;">__ : __</div>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Postal Code</div>
                       <div style="font-weight:700;">V6H 1A1</div>
                     </td>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Phone Number</div>
                       <div style="font-weight:700;">+1 (604) 555-0192</div>
                     </td>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Odometer Out</div>
                       <div style="font-weight:900;font-family:monospace;">208,616</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Odo In</div>
                       <div style="color:#ccc;font-family:monospace;">______</div>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Insurance Policy #</div>
                       <div style="font-weight:700;">ICBC AutoPlan #8849-012</div>
                     </td>
-                    <td colspan="2" style="border:1px solid #bbb;padding:4px 5px;">
+                    <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">License Expiry</div>
                       <div style="font-weight:700;">12/2028</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Rate Code</div>
                       <div style="font-weight:900;">WP</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Protection</div>
                       <div style="font-weight:900;color:#16a34a;">CDW &#10003;</div>
                     </td>
-                    <td style="border:1px solid #bbb;padding:4px 5px;">
+                    <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Fuel Out</div>
                       <div style="font-weight:900;">8/8 FULL</div>
                     </td>
@@ -1921,7 +1949,7 @@
                 </table>
 
                 <!-- ADDITIONAL DRIVERS -->
-                <div style="border:1px solid #bbb;padding:3px 6px;margin-bottom:5px;font-size:8.5px;">
+                <div style="border:1px solid #bbb;padding:1px 3px;margin-bottom:3px;font-size:7.5px;">
                   <strong>THE BELOW NAMED PERSONS ARE AUTHORIZED AS ADDITIONAL DRIVERS. PRINT NAME ABOVE SIGNATURE:</strong>
                   <span style="display:inline-block;width:160px;border-bottom:1px solid #555;margin-left:8px;">&nbsp;</span>
                   &nbsp;<strong>LICENSE #:</strong>
@@ -1931,11 +1959,11 @@
                 </div>
 
                 <!-- TERMS + CHARGES (2-COL LAYOUT) -->
-                <div style="display:flex;gap:8px;margin-bottom:5px;">
+                <div style="display:flex;gap:5px;margin-bottom:3px;">
 
                   <!-- LEFT: Important Information -->
-                  <div style="flex:1.7;border:1px solid #bbb;padding:5px;">
-                    <div style="font-weight:900;font-size:9.5px;border-bottom:1px solid #aaa;padding-bottom:3px;margin-bottom:4px;text-transform:uppercase;">&#9888; IMPORTANT INFORMATION &mdash; PLEASE READ CAREFULLY</div>
+                  <div style="flex:1.7;border:1px solid #bbb;padding:3px;">
+                    <div style="font-weight:900;font-size:8px;border-bottom:1px solid #aaa;padding-bottom:2px;margin-bottom:3px;text-transform:uppercase;">&#9888; IMPORTANT INFORMATION &mdash; PLEASE READ CAREFULLY</div>
                     <p style="margin:0 0 4px;font-size:7.5px;line-height:1.45;">Kilometre rates do not include cost of fuel. Refuelling charge of $20 plus cost of fuel. If not returned when due or when demanded, vehicle must be returned immediately.</p>
                     <p style="margin:0 0 4px;font-size:7.5px;line-height:1.45;">If renter does not return the vehicle upon expiry of the agreement, renter must report vehicle stolen to police within 24 hours. Before the due date, renter must notify company in person to extend a rental. Lost key charge: $1,500. CDW does not apply to damage caused by off-road use, damage to interior, or collision with stationary/overhead objects.</p>
                     <p style="margin:0 0 4px;font-size:7.5px;line-height:1.45;">Renter must ensure that insurance coverage for rental vehicles is adequate and in full force at all times. Renter is fully responsible for any or all balance if billing. Renter must maintain proper fuel levels in, and must not overload the renter vehicle. Renter is fully liable for all towing, discharge and loss of use if the vehicle fails, is abandoned, operated without proper care, or involved in any accident.</p>
@@ -1944,10 +1972,10 @@
                   </div>
 
                   <!-- RIGHT: Vehicle Diagram + Charges -->
-                  <div style="flex:1;border:1px solid #bbb;padding:5px;">
+                  <div style="flex:1;border:1px solid #bbb;padding:3px;">
 
                     <!-- Vehicle condition diagram (top view SVG) -->
-                    <div style="border:1px solid #ddd;margin-bottom:6px;padding:5px;text-align:center;background:#fafafa;">
+                    <div style="border:1px solid #ddd;margin-bottom:3px;padding:3px;text-align:center;background:#fafafa;">
                       <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;margin-bottom:4px;color:#555;">Vehicle Condition at Check-Out &mdash; Mark Damages</div>
                       <svg viewBox="0 0 200 90" width="170" height="76" style="display:block;margin:0 auto;">
                         <!-- Car body top-view -->
@@ -1982,17 +2010,17 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">MILES @ $0.10</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;">$0.00</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">DAYS @ $27.99</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;color:#aaa;">&mdash;</td></tr>
-                        <tr style="background:#eff6ff;"><td style="border:1px solid #bbb;padding:2px 5px;font-weight:700;">WEEKS @ $160.93</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;font-weight:700;text-align:right;">$160.93</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">CDW @ $10.00/day x7</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;">$70.00</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">GPS FEE</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;">$0.00</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">FUEL</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;">$3.50</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">HST (13%)</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;">$27.71</td></tr>
-                        <tr style="background:#f0fdf4;"><td style="border:1.5px solid #444;padding:3px 5px;font-weight:900;">TOTAL CHARGES</td><td style="border:1.5px solid #444;padding:3px 5px;font-family:monospace;font-weight:900;text-align:right;color:#0369a1;">$262.14</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;">LESS DEPOSITS</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;color:#dc2626;">$420.00</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:2px 5px;font-weight:700;">NET DUE MEMBER</td><td style="border:1px solid #bbb;padding:2px 5px;font-family:monospace;text-align:right;">$0.00</td></tr>
-                        <tr style="background:#fffbeb;"><td style="border:1.5px solid #444;padding:3px 5px;font-weight:900;text-transform:uppercase;">Amount Due</td><td style="border:1.5px solid #444;padding:3px 5px;font-family:monospace;font-weight:900;text-align:right;font-size:11px;">$0.00</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">MILES @ $0.10</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">DAYS @ $27.99</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;color:#aaa;">&mdash;</td></tr>
+                        <tr style="background:#eff6ff;"><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">WEEKS @ $160.93</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;font-weight:700;text-align:right;">$160.93</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">CDW @ $10.00/day x7</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$70.00</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">GPS FEE</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">FUEL</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$3.50</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">HST (13%)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$27.71</td></tr>
+                        <tr style="background:#f0fdf4;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;">TOTAL CHARGES</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;color:#0369a1;">$262.14</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">LESS DEPOSITS</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;color:#dc2626;">$420.00</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">NET DUE MEMBER</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
+                        <tr style="background:#fffbeb;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;text-transform:uppercase;">Amount Due</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;font-size:11px;">$0.00</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -2000,32 +2028,32 @@
                 </div>
 
                 <!-- INSURANCE SECTION -->
-                <div style="border:1px solid #bbb;padding:4px 6px;margin-bottom:6px;font-size:8px;line-height:1.4;">
+                <div style="border:1px solid #bbb;padding:2px 5px;margin-bottom:3px;font-size:7px;line-height:1.3;">
                   <strong>INSURANCE:</strong> The COMPANY has obtained all necessary automobile insurance as required by law. The MEMBER acknowledges receipt of a copy of the insurance policy document and agrees that the insured vehicle is being rented under the terms and conditions of the insurance policy which are made a part of this rental agreement.
                   &nbsp;&bull;&nbsp;<strong>$20.00 PER DAY</strong> &nbsp;&bull;&nbsp; <strong>$160.93 PER WEEK</strong>
                 </div>
 
                 <!-- SIGNATURE LINES -->
-                <div style="display:flex;gap:14px;margin-bottom:8px;">
+                <div style="display:flex;gap:8px;margin-bottom:4px;">
                   <div style="flex:1;text-align:center;">
-                    <div style="border-bottom:2px solid #111;height:32px;margin-bottom:4px;"></div>
+                    <div style="border-bottom:2px solid #111;height:22px;margin-bottom:3px;"></div>
                     <div style="font-size:8.5px;font-weight:900;text-transform:uppercase;">Renter Signature</div>
                     <div style="font-size:7.5px;color:#666;margin-top:1px;">PATRICK JOHNSON &bull; Date: ___________</div>
                   </div>
                   <div style="flex:1;text-align:center;">
-                    <div style="border-bottom:2px solid #111;height:32px;margin-bottom:4px;"></div>
+                    <div style="border-bottom:2px solid #111;height:22px;margin-bottom:3px;"></div>
                     <div style="font-size:8.5px;font-weight:900;text-transform:uppercase;">Authorized Agent Signature</div>
                     <div style="font-size:7.5px;color:#666;margin-top:1px;">AGENT #4 &bull; CS-04 &bull; TRY-1 CAR RENTALS</div>
                   </div>
                   <div style="flex:1;text-align:center;">
-                    <div style="border-bottom:2px solid #111;height:32px;margin-bottom:4px;"></div>
+                    <div style="border-bottom:2px solid #111;height:22px;margin-bottom:3px;"></div>
                     <div style="font-size:8.5px;font-weight:900;text-transform:uppercase;">Additional Driver Signature</div>
                     <div style="font-size:7.5px;color:#666;margin-top:1px;">Name: ___________________________</div>
                   </div>
                 </div>
 
                 <!-- FOOTER -->
-                <div style="border-top:2px solid #111;padding-top:5px;display:flex;justify-content:space-between;align-items:center;font-size:7.5px;color:#777;">
+                <div style="border-top:1px solid #555;padding-top:3px;display:flex;justify-content:space-between;align-items:center;font-size:7.5px;color:#777;">
                   <span>TRY-1 CAR RENTALS &bull; West End Location &bull; 4501 Keele Street Unit 60, Toronto, ON M3J4A4 &bull; Tel: (416) 840-0508</span>
                   <span style="font-family:monospace;font-weight:700;color:#0369a1;">RA #3291 &bull; Sept 19, 2026 &bull; Agent: CS-04</span>
                 </div>
