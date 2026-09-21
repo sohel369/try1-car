@@ -187,6 +187,55 @@
         <!-- Scrollable Navigation Tree -->
         <nav class="flex-1 px-2 py-3 space-y-1 overflow-y-auto custom-scrollbar">
 
+            <!-- ⭐ MODULE: FAVORITES (EXACT BUYER DESKTOP ERP WORKFLOW) -->
+            <div class="mb-2 bg-slate-900/60 rounded-xl p-1.5 border border-amber-500/30">
+                <button onclick="toggleSidebarGroup('favorites')" class="w-full flex items-center justify-between px-2.5 py-1.5 text-xs font-bold text-amber-300 uppercase tracking-wider hover:text-amber-100">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                        <span>Favorites</span>
+                    </span>
+                    <i id="arrow-favorites" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                </button>
+                <div id="sub-favorites" class="space-y-0.5 pt-1">
+                    <button onclick="switchView('checkout', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-emerald-400 w-4"></i>
+                        <span>Check-Out</span>
+                    </button>
+                    <button onclick="switchView('checkin', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-arrow-right-to-bracket text-blue-400 w-4"></i>
+                        <span>Check-In</span>
+                    </button>
+                    <button onclick="switchView('vehicle-exchange', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-right-left text-amber-400 w-4"></i>
+                        <span>Vehicle Exchange</span>
+                    </button>
+                    <button onclick="switchView('misc-sales', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-cart-plus text-rose-400 w-4"></i>
+                        <span>Miscellaneous Sales</span>
+                    </button>
+                    <button onclick="switchView('counter', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-magnifying-glass text-sky-400 w-4"></i>
+                        <span>Contract Inquiry</span>
+                    </button>
+                    <button onclick="switchView('reports', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-clipboard-check text-purple-400 w-4"></i>
+                        <span>Contract &amp; Res. Audit</span>
+                    </button>
+                    <button onclick="showToast('Extension Inquiry: View all active contracts up for renewal')" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-calendar-plus text-teal-400 w-4"></i>
+                        <span>Extension Inquiry</span>
+                    </button>
+                    <button onclick="showToast('Due Back Inquiry: 8 vehicles due today at WestEnd')" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-clock-rotate-left text-amber-400 w-4"></i>
+                        <span>Due Back Inquiry</span>
+                    </button>
+                    <button onclick="openTicketLookupModal()" class="sidebar-btn w-full flex items-center space-x-2.5 px-2.5 py-1.5 rounded-lg text-xs font-bold text-amber-300 hover:bg-amber-950/40 hover:text-amber-200 transition">
+                        <i class="fa-solid fa-id-card-clip text-amber-400 w-4"></i>
+                        <span>By Date/Time/License</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- MAIN SHORTCUTS -->
             <div>
                 <button onclick="switchView('dashboard', this)" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 lg:py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/60 hover:text-white transition">
@@ -217,7 +266,7 @@
                 <div id="sub-counter" class="space-y-0.5 pl-3 pt-1">
                     <button onclick="switchView('counter', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/60 hover:text-white transition sidebar-item-active">
                         <i class="fa-solid fa-file-signature text-sky-400 w-4"></i>
-                        <span>Contract (RA #3291)</span>
+                        <span>Contract (RA #3195)</span>
                         <span class="ml-auto bg-amber-500/20 text-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">Active</span>
                     </button>
                     <button onclick="switchView('checkout', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/60 hover:text-white transition">
@@ -463,48 +512,91 @@
                         </h3>
                         <button onclick="showToast('Drag and drop to rearrange favourites (coming soon)')" class="text-[10px] text-sky-600 hover:text-sky-800 font-bold no-print">&#9998; Edit</button>
                     </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="favourites-grid">
-                        <!-- Favourite 1: New Contract -->
-                        <button onclick="switchView('counter'); switchContractSubTab('summary');" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 transition group">
-                            <div class="w-9 h-9 rounded-lg bg-sky-600 text-white flex items-center justify-center shadow group-hover:bg-sky-700 transition">
-                                <i class="fa-solid fa-plus text-sm"></i>
+                    <!-- Quick Parking Ticket / Toll Cross-Reference Modal Trigger -->
+                    <div class="mb-3 p-3 bg-amber-50 border border-amber-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-receipt"></i></span>
+                            <div>
+                                <span class="font-bold text-xs text-amber-950">Parking Ticket & 407 Toll Lookup</span>
+                                <p class="text-[10px] text-amber-800">Match ticket date/time with contract records to bill responsible customer</p>
                             </div>
-                            <span class="text-[10px] font-bold text-sky-900 text-center leading-tight">New Contract</span>
+                        </div>
+                        <button onclick="openTicketLookupModal()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-lg transition shadow flex items-center gap-1">
+                            <i class="fa-solid fa-magnifying-glass"></i> Find Ticket Customer
                         </button>
-                        <!-- Favourite 2: Check-Out -->
-                        <button onclick="switchView('checkout')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition group">
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5" id="favourites-grid">
+                        <!-- 1: Check-Out -->
+                        <button onclick="switchView('checkout')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition group shadow-sm">
                             <div class="w-9 h-9 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow group-hover:bg-emerald-700 transition">
                                 <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
                             </div>
-                            <span class="text-[10px] font-bold text-emerald-900 text-center leading-tight">Check-Out</span>
+                            <span class="text-[11px] font-bold text-emerald-900 text-center leading-tight">Check-Out</span>
                         </button>
-                        <!-- Favourite 3: Check-In -->
-                        <button onclick="switchView('checkin')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 transition group">
+
+                        <!-- 2: Check-In -->
+                        <button onclick="switchView('checkin')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 transition group shadow-sm">
                             <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow group-hover:bg-blue-700 transition">
                                 <i class="fa-solid fa-arrow-right-to-bracket text-sm"></i>
                             </div>
-                            <span class="text-[10px] font-bold text-blue-900 text-center leading-tight">Check-In</span>
+                            <span class="text-[11px] font-bold text-blue-900 text-center leading-tight">Check-In</span>
                         </button>
-                        <!-- Favourite 4: Accounting -->
-                        <button onclick="switchView('accounting')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 transition group">
-                            <div class="w-9 h-9 rounded-lg bg-violet-600 text-white flex items-center justify-center shadow group-hover:bg-violet-700 transition">
-                                <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
-                            </div>
-                            <span class="text-[10px] font-bold text-violet-900 text-center leading-tight">Accounting</span>
-                        </button>
-                        <!-- Favourite 5: Fleet -->
-                        <button onclick="switchView('fleet')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 transition group">
+
+                        <!-- 3: Vehicle Exchange -->
+                        <button onclick="switchView('vehicle-exchange')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 transition group shadow-sm">
                             <div class="w-9 h-9 rounded-lg bg-amber-500 text-white flex items-center justify-center shadow group-hover:bg-amber-600 transition">
-                                <i class="fa-solid fa-car-side text-sm"></i>
+                                <i class="fa-solid fa-right-left text-sm"></i>
                             </div>
-                            <span class="text-[10px] font-bold text-amber-900 text-center leading-tight">Fleet Status</span>
+                            <span class="text-[11px] font-bold text-amber-900 text-center leading-tight">Vehicle Exchange</span>
                         </button>
-                        <!-- Favourite 6: Reports -->
-                        <button onclick="switchView('reports')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 transition group">
+
+                        <!-- 4: Miscellaneous Sales -->
+                        <button onclick="switchView('misc-sales')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 transition group shadow-sm">
                             <div class="w-9 h-9 rounded-lg bg-rose-600 text-white flex items-center justify-center shadow group-hover:bg-rose-700 transition">
-                                <i class="fa-solid fa-chart-bar text-sm"></i>
+                                <i class="fa-solid fa-cart-plus text-sm"></i>
                             </div>
-                            <span class="text-[10px] font-bold text-rose-900 text-center leading-tight">Reports</span>
+                            <span class="text-[11px] font-bold text-rose-900 text-center leading-tight">Misc Sales</span>
+                        </button>
+
+                        <!-- 5: Contract Inquiry -->
+                        <button onclick="switchView('counter')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 transition group shadow-sm">
+                            <div class="w-9 h-9 rounded-lg bg-sky-600 text-white flex items-center justify-center shadow group-hover:bg-sky-700 transition">
+                                <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-sky-900 text-center leading-tight">Contract Inquiry</span>
+                        </button>
+
+                        <!-- 6: Contract & Res. Audit -->
+                        <button onclick="switchView('reports')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-purple-50 hover:bg-purple-100 border border-purple-200 transition group shadow-sm">
+                            <div class="w-9 h-9 rounded-lg bg-purple-600 text-white flex items-center justify-center shadow group-hover:bg-purple-700 transition">
+                                <i class="fa-solid fa-clipboard-check text-sm"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-purple-900 text-center leading-tight">Contract Audit</span>
+                        </button>
+
+                        <!-- 7: Extension Inquiry -->
+                        <button onclick="showToast('Viewing 5 contracts pending extension')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-teal-50 hover:bg-teal-100 border border-teal-200 transition group shadow-sm">
+                            <div class="w-9 h-9 rounded-lg bg-teal-600 text-white flex items-center justify-center shadow group-hover:bg-teal-700 transition">
+                                <i class="fa-solid fa-calendar-plus text-sm"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-teal-900 text-center leading-tight">Extension Inquiry</span>
+                        </button>
+
+                        <!-- 8: Due Back Inquiry -->
+                        <button onclick="showToast('8 Vehicles due back today at WestEnd')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 transition group shadow-sm">
+                            <div class="w-9 h-9 rounded-lg bg-orange-600 text-white flex items-center justify-center shadow group-hover:bg-orange-700 transition">
+                                <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-orange-900 text-center leading-tight">Due Back Inquiry</span>
+                        </button>
+
+                        <!-- 9: By Date/Time/License (Ticket Lookup) -->
+                        <button onclick="openTicketLookupModal()" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-amber-100 hover:bg-amber-200 border-2 border-amber-400 transition group shadow-sm col-span-2 sm:col-span-1 lg:col-span-2">
+                            <div class="w-9 h-9 rounded-lg bg-amber-600 text-white flex items-center justify-center shadow group-hover:bg-amber-700 transition">
+                                <i class="fa-solid fa-id-card-clip text-sm"></i>
+                            </div>
+                            <span class="text-[11px] font-black text-amber-950 text-center leading-tight">By Date/Time/License (Tickets)</span>
                         </button>
                     </div>
                 </div>
@@ -518,7 +610,7 @@
                         <div class="space-y-2 text-xs">
                             <div class="p-2.5 bg-slate-50 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-slate-100">
                                 <div>
-                                    <span class="font-bold text-slate-800">RA #3291 - Patrick Johnson</span>
+                                    <span class="font-bold text-slate-800">RA #3195 - Patrick Johnson</span>
                                     <span class="block text-slate-500 text-[11px]">COR 01 (Toyota Corolla) &bull; WestEnd</span>
                                 </div>
                                 <button onclick="switchView('counter')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold rounded text-[11px] w-fit">View Contract</button>
@@ -541,7 +633,7 @@
                         </div>
                         <div class="flex flex-wrap gap-2 pt-2">
                             <button onclick="switchView('counter')" class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg transition shadow">
-                                <i class="fa-solid fa-desktop mr-1"></i> Counter (RA #3291)
+                                <i class="fa-solid fa-desktop mr-1"></i> Counter (RA #3195)
                             </button>
                             <button onclick="switchView('accounting')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg transition shadow">
                                 <i class="fa-solid fa-file-invoice-dollar mr-1"></i> Accounting Ledger
@@ -553,7 +645,7 @@
 
 
             <!-- ========================================================================= -->
-            <!-- 2. COUNTER & CONTRACT MODULE (RA #3291 - EXACT REDESIGN OF BUYER'S SCREEN) -->
+            <!-- 2. COUNTER & CONTRACT MODULE (RA #3195 - EXACT REDESIGN OF BUYER'S SCREEN) -->
             <!-- ========================================================================= -->
             <div id="view-counter" class="view-panel space-y-4 sm:space-y-5">
                 
@@ -570,16 +662,16 @@
                                     <i class="fa-solid fa-circle-check text-[9px] mr-1"></i> ACTIVE CONTRACT
                                 </span>
                             </div>
-                            <p class="text-[11px] sm:text-xs text-slate-500">Contract Agreement #3291 &bull; Walk-Up Customer &bull; TRY-1 CAR RENTALS</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500">Contract Agreement #3195 &bull; Walk-Up Customer &bull; TRY-1 CAR RENTALS</p>
                         </div>
                     </div>
 
                     <div class="flex items-center space-x-2 no-print flex-wrap gap-y-2">
                         <button onclick="openPrintAgreementModal()" class="px-3 py-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
                             <i class="fa-solid fa-print text-slate-500"></i>
-                            <span>Print RA #3291</span>
+                            <span>Print RA #3195</span>
                         </button>
-                        <button onclick="showToast('Contract RA #3291 successfully saved to database!')" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
+                        <button onclick="showToast('Contract RA #3195 successfully saved to database!')" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
                             <i class="fa-solid fa-floppy-disk"></i>
                             <span>Save Changes</span>
                         </button>
@@ -594,7 +686,7 @@
                     </div>
                     <div class="border-r border-slate-100 pr-1 sm:pr-2">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">RA # (Agreement)</span>
-                        <input type="text" value="3291" class="text-xs font-black text-sky-700 bg-transparent border-none p-0 focus:ring-0 w-full">
+                        <input type="text" value="3195" class="text-xs font-black text-sky-700 bg-transparent border-none p-0 focus:ring-0 w-full">
                     </div>
                     <div class="border-r border-slate-100 pr-1 sm:pr-2">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Ref #</span>
@@ -668,57 +760,95 @@
                     <div id="ccontent-summary" class="ccontent-panel p-3.5 sm:p-5 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
                         
                         <!-- Col 1: Pickup & Schedule -->
-                        <div class="space-y-3 sm:space-y-3.5 p-3.5 sm:p-4 rounded-xl bg-slate-50/60 border border-slate-200">
-                            <div class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-sky-600 text-white font-bold text-xs uppercase tracking-wider mb-1">
-                                <i class="fa-solid fa-calendar-check"></i>
-                                <span>Pickup Information</span>
-                                <span class="ml-auto text-sky-200 text-[10px] font-normal">Dates &amp; Location</span>
+                        <div class="space-y-3 p-3.5 sm:p-4 rounded-xl bg-slate-50/60 border border-slate-200 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-sky-600 text-white font-bold text-xs uppercase tracking-wider mb-3 shadow-sm">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <span>Pickup Information</span>
+                                    <span class="ml-auto text-sky-200 text-[10px] font-normal">Dates &amp; Schedule</span>
+                                </div>
+
+                                <div class="space-y-2.5 text-xs">
+                                    <!-- Row 1: Pick Up (OUT) -->
+                                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-1.5">
+                                        <div class="flex items-center justify-between text-[11px] font-bold text-sky-800 border-b border-slate-100 pb-1">
+                                            <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-up-from-bracket text-[10px] text-sky-600"></i> Pick-Up (Out)</span>
+                                            <span class="text-[10px] text-slate-400 font-semibold uppercase">Scheduled</span>
+                                        </div>
+                                        <div class="grid grid-cols-3 gap-2">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-0.5 truncate">Location</label>
+                                                <select class="w-full bg-slate-50 border border-slate-300 rounded-md text-xs font-semibold p-1.5 text-slate-800 focus:bg-white">
+                                                    <option selected>WestEnd</option>
+                                                    <option>Airport YVR</option>
+                                                    <option>Downtown</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-0.5 truncate">Date Out</label>
+                                                <input type="date" id="contract-date-out" value="2026-09-17" onchange="calculateContractDuration()" class="w-full bg-slate-50 border border-slate-300 rounded-md text-xs font-bold p-1.5 text-slate-800 cursor-pointer focus:bg-white">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-0.5 truncate">Time (Exact)</label>
+                                                <input type="time" id="contract-time-out" value="12:02" class="w-full bg-slate-50 border border-slate-300 rounded-md text-xs font-bold p-1.5 text-slate-800 focus:bg-white">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 2: Return Due (DUE) -->
+                                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-1.5">
+                                        <div class="flex items-center justify-between text-[11px] font-bold text-slate-800 border-b border-slate-100 pb-1">
+                                            <span class="flex items-center gap-1"><i class="fa-solid fa-calendar-day text-[10px] text-amber-600"></i> Return Due</span>
+                                            <span class="text-[10px] text-slate-400 font-semibold uppercase">Expected</span>
+                                        </div>
+                                        <div class="grid grid-cols-3 gap-2">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-0.5 truncate">Location</label>
+                                                <select class="w-full bg-slate-50 border border-slate-300 rounded-md text-xs font-semibold p-1.5 text-slate-800 focus:bg-white">
+                                                    <option selected>WestEnd</option>
+                                                    <option>Airport YVR</option>
+                                                    <option>Downtown</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-0.5 truncate">Date Due</label>
+                                                <input type="date" id="contract-date-due" value="2026-09-24" onchange="calculateContractDuration()" class="w-full bg-slate-50 border border-slate-300 rounded-md text-xs font-bold p-1.5 text-slate-800 cursor-pointer focus:bg-white">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-500 mb-0.5 truncate">Time (Exact)</label>
+                                                <input type="time" id="contract-time-due" value="12:02" class="w-full bg-slate-50 border border-slate-300 rounded-md text-xs font-bold p-1.5 text-slate-800 focus:bg-white">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 3: Actual Return (IN) -->
+                                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-1.5">
+                                        <div class="flex items-center justify-between text-[11px] font-bold text-slate-600 border-b border-slate-100 pb-1">
+                                            <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down-to-bracket text-[10px] text-emerald-600"></i> Return In (Actual)</span>
+                                            <span class="text-[10px] text-slate-400 font-semibold uppercase">Check-In</span>
+                                        </div>
+                                        <div class="grid grid-cols-3 gap-2">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 mb-0.5 truncate">Location</label>
+                                                <input type="text" placeholder="-- Open --" class="w-full bg-slate-100 border border-slate-200 rounded-md text-xs p-1.5 text-slate-500">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 mb-0.5 truncate">Date In</label>
+                                                <input type="date" placeholder="-- Pending --" class="w-full bg-slate-100 border border-slate-200 rounded-md text-xs p-1.5 text-slate-500 cursor-pointer">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-slate-400 mb-0.5 truncate">Time In</label>
+                                                <input type="time" class="w-full bg-slate-100 border border-slate-200 rounded-md text-xs p-1.5 text-slate-500">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 mb-1">Loc. Out</label>
-                                    <select class="w-full bg-white border border-slate-300 rounded-lg text-xs font-semibold p-2 text-slate-800">
-                                        <option selected>WestEnd</option>
-                                        <option>Airport YVR</option>
-                                        <option>Downtown</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 mb-1">Date Out</label>
-                                    <input type="date" value="2026-09-17" class="w-full bg-white border border-slate-300 rounded-lg text-xs font-bold p-2 text-slate-800 cursor-pointer">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 mb-1">Loc. Due</label>
-                                    <select class="w-full bg-white border border-slate-300 rounded-lg text-xs font-semibold p-2 text-slate-800">
-                                        <option selected>WestEnd</option>
-                                        <option>Airport YVR</option>
-                                        <option>Downtown</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 mb-1">Date Due</label>
-                                    <input type="date" value="2026-09-24" class="w-full bg-white border border-slate-300 rounded-lg text-xs font-bold p-2 text-slate-800 cursor-pointer">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-1">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 mb-1">Loc. In (Actual)</label>
-                                    <input type="text" placeholder="-- Open --" class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-2 text-slate-500">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 mb-1">Date In (Actual)</label>
-                                    <input type="date" placeholder="-- Pending --" class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-2 text-slate-500 cursor-pointer">
-                                </div>
-                            </div>
-
-                            <div class="p-2.5 bg-sky-50 rounded-lg border border-sky-100 flex justify-between items-center text-xs">
-                                <span class="font-semibold text-sky-900">Total Duration:</span>
-                                <span class="font-bold text-sky-700 bg-white px-2 py-0.5 rounded border border-sky-200">7 Days (1 Week)</span>
+                            <!-- Duration Result Banner -->
+                            <div class="p-2.5 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg border border-sky-200 flex justify-between items-center text-xs mt-2 shadow-sm">
+                                <span class="font-bold text-sky-900 flex items-center gap-1.5"><i class="fa-solid fa-calculator text-sky-600"></i> Total Duration:</span>
+                                <span id="contract-duration-badge" class="font-black text-sky-700 bg-white px-2.5 py-1 rounded-md border border-sky-300 shadow-sm text-xs">7 Days (1 Week)</span>
                             </div>
                         </div>
 
@@ -964,7 +1094,7 @@
                     <div id="ccontent-charges" class="ccontent-panel p-3.5 sm:p-5 space-y-4 hidden">
                         <div class="max-w-2xl bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm space-y-3 mx-auto">
                             <h4 class="font-bold text-slate-900 text-sm border-b pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                                <span>Rental Charges Statement (RA #3291)</span>
+                                <span>Rental Charges Statement (RA #3195)</span>
                                 <span class="text-sky-600 font-mono text-xs">Invoice #INV-2026-091</span>
                             </h4>
                             <div class="space-y-2 text-xs">
@@ -1037,7 +1167,7 @@
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Select Agreement (RA #)</label>
                             <select class="w-full p-2.5 border rounded-lg text-xs font-semibold">
-                                <option>RA #3291 - Patrick Johnson (Toyota Corolla)</option>
+                                <option>RA #3195 - Patrick Johnson (Toyota Corolla)</option>
                                 <option>RA #3292 - David Miller (Ford Explorer)</option>
                             </select>
                         </div>
@@ -1084,7 +1214,7 @@
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Active Agreement</label>
                             <select class="w-full p-2.5 border rounded-lg text-xs font-semibold">
-                                <option>RA #3291 - Patrick Johnson (COR 01)</option>
+                                <option>RA #3195 - Patrick Johnson (COR 01)</option>
                                 <option>RA #3289 - Michael Chang (LUX 02)</option>
                             </select>
                         </div>
@@ -1280,7 +1410,7 @@
                             <tbody class="divide-y divide-slate-100">
                                 <tr class="hover:bg-slate-50/80 transition">
                                     <td class="p-3 font-bold text-slate-900">INV-2026-091</td>
-                                    <td class="p-3 font-bold text-sky-700">RA #3291</td>
+                                    <td class="p-3 font-bold text-sky-700">RA #3195</td>
                                     <td class="p-3 font-semibold text-slate-800">Patrick Johnson</td>
                                     <td class="p-3 font-medium text-slate-600">COR 01 (Compact)</td>
                                     <td class="p-3 font-mono font-bold text-slate-900">$160.93</td>
@@ -1343,14 +1473,14 @@
                                 <h4 class="text-sm font-bold text-slate-900">Toyota Corolla 2024</h4>
                                 <span class="text-[11px] text-slate-500">Compact &bull; Plate: BC-8821</span>
                             </div>
-                            <span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded-full">ON RENT (RA #3291)</span>
+                            <span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded-full">ON RENT (RA #3195)</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-100">
                             <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800">208,616 mi</span></div>
                             <div><span class="text-slate-400 block text-[10px]">Fuel:</span><span class="font-bold text-slate-800">Full Tank (100%)</span></div>
                         </div>
                         <button onclick="switchView('counter')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
-                            View Contract #3291
+                            View Contract #3195
                         </button>
                     </div>
 
@@ -1652,8 +1782,8 @@
                     <p class="text-xs text-slate-500">Extend rental dates, add protection packages, or change assigned vehicles</p>
                 </div>
                 <div class="bg-white p-4 sm:p-5 rounded-xl border text-xs space-y-3">
-                    <input type="text" placeholder="Enter RA # (e.g. 3291) to load contract..." class="w-full p-2.5 border rounded-lg">
-                    <button onclick="switchView('counter')" class="w-full sm:w-auto px-4 py-2 bg-sky-600 text-white rounded font-bold">Load Agreement #3291</button>
+                    <input type="text" placeholder="Enter RA # (e.g. 3195) to load contract..." class="w-full p-2.5 border rounded-lg">
+                    <button onclick="switchView('counter')" class="w-full sm:w-auto px-4 py-2 bg-sky-600 text-white rounded font-bold">Load Agreement #3195</button>
                 </div>
             </div>
 
@@ -1676,7 +1806,7 @@
                 </div>
                 <div class="bg-white p-4 sm:p-5 rounded-xl border text-xs space-y-3">
                     <p>Current Unit: <strong>COR 01 (Toyota Corolla)</strong> &rarr; Swap To: <strong>SUV 04 (Ford Explorer)</strong></p>
-                    <button onclick="showToast('Vehicle swap completed on RA #3291!')" class="w-full sm:w-auto px-4 py-2 bg-sky-600 text-white rounded font-bold">Confirm Exchange</button>
+                    <button onclick="showToast('Vehicle swap completed on RA #3195!')" class="w-full sm:w-auto px-4 py-2 bg-sky-600 text-white rounded font-bold">Confirm Exchange</button>
                 </div>
             </div>
 
@@ -1709,8 +1839,8 @@
     <!-- ============================================== -->
     <!-- INTERACTIVE MODAL: RECORD EXPENSE              -->
     <!-- ============================================== -->
-    <div id="expense-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 no-print">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100 max-h-[90vh] overflow-y-auto">
+    <div id="expense-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4 no-print">
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100 max-h-[92vh] overflow-y-auto">
             <div class="p-4 bg-gradient-to-r from-rose-600 to-red-700 text-white flex justify-between items-center">
                 <div>
                     <h3 class="font-extrabold text-sm">Record Fleet / Business Expense</h3>
@@ -1756,8 +1886,8 @@
     <!-- ============================================== -->
     <!-- INTERACTIVE MODAL: LICENSE SCANNER              -->
     <!-- ============================================== -->
-    <div id="license-scan-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200">
+    <div id="license-scan-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 max-h-[92vh] overflow-y-auto">
             <div class="p-4 bg-gradient-to-r from-sky-900 to-blue-900 text-white flex justify-between items-center">
                 <div>
                     <span class="font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-camera-retro text-sky-300"></i> License Scanner</span>
@@ -1804,20 +1934,28 @@
     <!-- ============================================== -->
     <!-- INTERACTIVE MODAL: PRINT CONTRACT AGREEMENT    -->
     <!-- ============================================== -->
-    <div id="print-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden border border-slate-200 max-h-[95vh] flex flex-col">
+    <div id="print-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-1 sm:p-3 md:p-4">
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden border border-slate-200 max-h-[96vh] flex flex-col">
             <!-- Modal Top Bar (no-print) -->
-            <div class="p-3 sm:p-4 bg-slate-900 text-white flex justify-between items-center flex-shrink-0 no-print">
-                <span class="font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-print text-sky-400"></i> Print Preview — Rental Agreement RA #3291 (Physical Paper Replica)</span>
-                <div class="flex items-center space-x-2">
-                    <button onclick="window.print()" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
-                    <button onclick="closePrintModal()" class="text-slate-400 hover:text-white text-xl p-1 leading-none">&times;</button>
+            <div class="p-2.5 sm:p-3.5 bg-slate-900 text-white flex flex-wrap justify-between items-center gap-2 flex-shrink-0 no-print border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-sky-600/30 text-sky-400 flex items-center justify-center text-xs"><i class="fa-solid fa-print"></i></span>
+                    <div>
+                        <h4 class="font-bold text-xs sm:text-sm text-white">Print Agreement (RA #3195)</h4>
+                        <p class="text-[10px] text-slate-400 hidden sm:block">Full Page Rental Contract &amp; Terms Addendum</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-1.5 sm:space-x-2 ml-auto">
+                    <button onclick="window.print()" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition">
+                        <i class="fa-solid fa-print text-[11px]"></i> <span>Print / Save PDF</span>
+                    </button>
+                    <button onclick="closePrintModal()" class="text-slate-400 hover:text-white text-xl px-2 py-0.5 rounded-lg hover:bg-slate-800 transition leading-none">&times;</button>
                 </div>
             </div>
 
             <!-- Scrollable Contract Body — Exact Paper Replica -->
-            <div class="overflow-y-auto flex-1 bg-white" id="printable-contract">
-              <div style="font-family:Arial,sans-serif;font-size:8.5px;color:#111;padding:8px;max-width:800px;margin:0 auto;">
+            <div class="overflow-y-auto overflow-x-auto flex-1 bg-slate-100/50 p-1 sm:p-2 custom-scrollbar" id="printable-contract">
+              <div class="bg-white shadow-sm border border-slate-200 rounded-lg sm:rounded-none" style="font-family:Arial,sans-serif;font-size:8.5px;color:#111;padding:8px;max-width:800px;min-width:560px;margin:0 auto;">
 
                 <!-- HEADER -->
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:5px;margin-bottom:5px;">
@@ -1832,7 +1970,7 @@
                   </div>
                   <div style="text-align:right;">
                     <div style="font-size:9px;color:#888;margin-bottom:2px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">RA</div>
-                    <div style="font-size:22px;font-weight:900;color:#0369a1;letter-spacing:2px;line-height:1;">3291</div>
+                    <div style="font-size:22px;font-weight:900;color:#0369a1;letter-spacing:2px;line-height:1;">3195</div>
                     <div style="font-size:9px;font-weight:700;border:1.5px solid #111;padding:2px 8px;display:inline-block;margin-top:4px;letter-spacing:0.5px;">RENTAL AGREEMENT PAGE 1</div>
                   </div>
                 </div>
@@ -2063,10 +2201,72 @@
                   </div>
                 </div>
 
+                <!-- ═══ MANDATORY RENTAL POLICY & TERMS ADDENDUM (BUYER SPECIFICATIONS) ═══ -->
+                <div style="margin-top:4px;border:1.5px solid #111;padding:4px;background:#fff;font-size:7px;line-height:1.35;">
+                  <div style="background:#111;color:#fff;padding:2px 5px;font-weight:900;font-size:8px;text-transform:uppercase;display:flex;justify-content:space-between;margin-bottom:3px;">
+                    <span>TRY-1 CAR RENTAL &bull; SPECIAL TERMS &amp; OPERATING POLICIES</span>
+                    <span>TEL: (416) 840-0508 &bull; (647) 430-7686</span>
+                  </div>
+
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px;">
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#991b1b;text-transform:uppercase;">&#9632; Criminal Code &amp; Illegal Use:</div>
+                      <div>Vehicles strictly forbidden in any illegal transactions. Breach renders contract null &amp; void; all deposits non-refundable. <span style="font-weight:700;">Initials: X_______</span></div>
+                    </div>
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#0369a1;text-transform:uppercase;">&#9632; Electronic Toll Route (407 ETR):</div>
+                      <div>Transponders not interchangeable. $60.00 admin fee applied to customer for any 407 ETR usage. <span style="font-weight:700;">Initials: X_______</span></div>
+                    </div>
+                  </div>
+
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px;">
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#854d0e;text-transform:uppercase;">&#9632; Parking Tickets &amp; Red Light Camera:</div>
+                      <div>Fines sent to office: $60.00 admin fee for regular parking tickets; $150.00 fee for all camera violations.</div>
+                    </div>
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#1e293b;text-transform:uppercase;">&#9632; Re-Fueling Policy ($3.50 / Liter):</div>
+                      <div>Return vehicle with same fuel level. If under 100 km driven, gas station receipt required within 1 hr of return.</div>
+                    </div>
+                  </div>
+
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px;">
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#1e293b;text-transform:uppercase;">&#9632; Cleaning &amp; Detail Fees:</div>
+                      <div>Vehicle must return clean. Cleaning charge: $100.00 for Car / $200.00 for SUV if dirty.</div>
+                    </div>
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#991b1b;text-transform:uppercase;">&#9632; Late Return Policy ($10/hr):</div>
+                      <div>15-min grace period. After 24h: Reported STOLEN to police, deposit forfeited + $500 recovery fee. <span style="font-weight:700;">Initials: X_______</span></div>
+                    </div>
+                  </div>
+
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:3px;">
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#1e293b;text-transform:uppercase;">&#9632; Deposit Returns (Cash 22 Days):</div>
+                      <div>Cash deposits held 22 business days for 407 ETR &amp; ticket audit. Credit card released upon return inspection.</div>
+                    </div>
+                    <div style="border:1px solid #ddd;padding:2.5px;">
+                      <div style="font-weight:800;color:#991b1b;text-transform:uppercase;">&#9632; Smoking ($250 Fine) &amp; Pets ($100-$200):</div>
+                      <div>100% Smoke-Free. $250.00 smoking fine. Pets incur $100-$200 shampoo fee. <span style="font-weight:700;">Initials: X_______</span></div>
+                    </div>
+                  </div>
+
+                  <div style="background:#fef2f2;border:1px solid #f87171;padding:2.5px;margin-bottom:3px;font-weight:700;color:#991b1b;">
+                    &#9888; ZERO REFUND &amp; EXCLUSIONS: Unauthorized driver renders contract VOID. Rims, tires and windshield are 100% customer responsibility (not covered by insurance).
+                  </div>
+
+                  <!-- Policy Acknowledgement Line -->
+                  <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px dashed #777;padding-top:2px;">
+                    <div style="flex:1;"><strong>Acknowledged &amp; Agreed by Customer:</strong> ____________________________________</div>
+                    <div style="flex:0.5;text-align:right;"><strong>Date:</strong> ____________________</div>
+                  </div>
+                </div>
+
                 <!-- FOOTER -->
-                <div style="border-top:1px solid #555;padding-top:3px;display:flex;justify-content:space-between;align-items:center;font-size:7.5px;color:#777;">
+                <div style="border-top:1px solid #555;padding-top:3px;margin-top:3px;display:flex;justify-content:space-between;align-items:center;font-size:7.5px;color:#777;">
                   <span>TRY-1 CAR RENTALS &bull; West End Location &bull; 4501 Keele Street Unit 60, Toronto, ON M3J4A4 &bull; Tel: (416) 840-0508</span>
-                  <span style="font-family:monospace;font-weight:700;color:#0369a1;">RA #3291 &bull; Sept 19, 2026 &bull; Agent: CS-04</span>
+                  <span style="font-family:monospace;font-weight:700;color:#0369a1;">RA #3195 &bull; Printed: Sept 21, 2026 &bull; Agent: CS-04</span>
                 </div>
 
               </div>
@@ -2074,6 +2274,66 @@
         </div>
     </div>
 
+
+    <!-- ============================================== -->
+    <!-- INTERACTIVE MODAL: PARKING TICKET & 407 LOOKUP -->
+    <!-- ============================================== -->
+    <div id="ticket-lookup-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 max-h-[92vh] overflow-y-auto">
+            <div class="p-4 bg-gradient-to-r from-amber-600 to-amber-800 text-white flex justify-between items-center">
+                <div>
+                    <span class="font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-receipt"></i> Parking Ticket & 407 ETR Customer Finder</span>
+                    <p class="text-xs text-amber-100 mt-0.5">Match violation date & exact time to find the responsible driver</p>
+                </div>
+                <button onclick="closeTicketLookupModal()" class="text-amber-200 hover:text-white text-xl p-1">&times;</button>
+            </div>
+            <div class="p-5 space-y-4 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-500 text-[10px] font-bold mb-1">Violation Date</label>
+                        <input type="date" id="ticket-date" value="2026-09-18" class="w-full p-2 bg-slate-50 border border-slate-300 rounded font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 text-[10px] font-bold mb-1">Violation Time (Exact)</label>
+                        <input type="time" id="ticket-time" value="14:35" class="w-full p-2 bg-slate-50 border border-slate-300 rounded font-bold">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-500 text-[10px] font-bold mb-1">Vehicle Plate or Unit #</label>
+                        <input type="text" id="ticket-plate" value="BC-8821" placeholder="e.g. BC-8821 or COR 01" class="w-full p-2 bg-slate-50 border border-slate-300 rounded font-mono font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 text-[10px] font-bold mb-1">Violation Type</label>
+                        <select class="w-full p-2 bg-slate-50 border border-slate-300 rounded font-semibold">
+                            <option>City Parking Ticket ($60 fee)</option>
+                            <option>Red Light Camera ($150 fee)</option>
+                            <option>407 ETR Electronic Toll ($60 fee)</option>
+                            <option>Speed Camera / Photo Radar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="searchTicketCustomer()" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-2 shadow">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search Customer Matching This Time
+                </button>
+
+                <!-- Search Results Box -->
+                <div id="ticket-result-box" class="p-3 bg-emerald-50 border border-emerald-300 rounded-xl space-y-1.5 hidden">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-emerald-900 text-xs flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-600"></i> Match Found for Sept 18 @ 14:35</span>
+                        <span class="px-2 py-0.5 bg-emerald-600 text-white font-bold text-[10px] rounded">RA #3195</span>
+                    </div>
+                    <div class="text-slate-700 text-[11px] space-y-0.5 pt-1">
+                        <div><strong>Customer:</strong> Patrick Johnson (+1 604 555-0192)</div>
+                        <div><strong>Rental Period:</strong> Sept 17 (12:02) &rarr; Sept 24 (12:02)</div>
+                        <div><strong>Vehicle:</strong> Toyota Corolla (COR 01 / BC-8821)</div>
+                        <div class="text-amber-800 font-bold pt-1">Charge Added: Violation Fine + $60 Admin Fee will be charged to card on file.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast Notification Banner -->
     <div id="toast" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-slate-900 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-2xl z-50 text-xs font-semibold flex items-center space-x-2.5 border border-slate-800 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none no-print max-w-[90vw]">
@@ -2251,6 +2511,61 @@
 
         function closePrintModal() {
             document.getElementById('print-modal').classList.add('hidden');
+        }
+
+        
+        // Calculate Contract Duration Dynamically from Calendar Dates
+        function calculateContractDuration() {
+            const dateOutInput = document.getElementById("contract-date-out");
+            const dateDueInput = document.getElementById("contract-date-due");
+            const badge = document.getElementById("contract-duration-badge");
+            
+            if (!dateOutInput || !dateDueInput || !badge) return;
+            
+            const d1 = new Date(dateOutInput.value);
+            const d2 = new Date(dateDueInput.value);
+            
+            if (isNaN(d1) || isNaN(d2)) return;
+            
+            const diffMs = d2 - d1;
+            const diffDays = Math.max(1, Math.round(diffMs / (1000 * 60 * 60 * 24)));
+            
+            let label = "";
+            if (diffDays === 7) {
+                label = "7 Days (1 Week)";
+            } else if (diffDays % 7 === 0) {
+                const w = diffDays / 7;
+                label = `${diffDays} Days (${w} Weeks)`;
+            } else if (diffDays > 7) {
+                const w = Math.floor(diffDays / 7);
+                const r = diffDays % 7;
+                label = `${diffDays} Days (${w} Wk, ${r} Day${r > 1 ? "s" : ""})`;
+            } else {
+                label = `${diffDays} Day${diffDays > 1 ? "s" : ""}`;
+            }
+            
+            badge.innerText = label;
+            badge.classList.add("bg-emerald-100", "text-emerald-900");
+            setTimeout(() => badge.classList.remove("bg-emerald-100", "text-emerald-900"), 1500);
+            
+            showToast(`Duration updated: ${label}`);
+        }
+
+        // Ticket Lookup Modal Functions
+        function openTicketLookupModal() {
+            const modal = document.getElementById("ticket-lookup-modal");
+            if (modal) modal.classList.remove("hidden");
+        }
+        function closeTicketLookupModal() {
+            const modal = document.getElementById("ticket-lookup-modal");
+            if (modal) modal.classList.add("hidden");
+        }
+        function searchTicketCustomer() {
+            const resultBox = document.getElementById("ticket-result-box");
+            if (resultBox) {
+                resultBox.classList.remove("hidden");
+                showToast("Match found! Customer Patrick Johnson was driving at this exact time.");
+            }
         }
 
         // License Scanner Modal Functions
