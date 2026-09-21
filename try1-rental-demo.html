@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -625,18 +625,31 @@
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-r from-sky-900 to-navy-950 text-white rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-lg space-y-4">
-                        <div>
-                            <span class="text-xs font-bold text-sky-300 uppercase tracking-wider">Quick Jump</span>
-                            <h3 class="text-base sm:text-lg font-extrabold mt-1">TRY-1 CAR RENTALS Operations</h3>
-                            <p class="text-xs text-slate-300 mt-1">Switch directly to the Counter contract processor or access the full Accounting ledger.</p>
+                    <div class="bg-gradient-to-br from-slate-900 via-sky-950 to-navy-950 text-white rounded-2xl p-4 sm:p-6 shadow-xl border border-sky-900/50 space-y-4">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-sky-800/40 pb-3">
+                            <div>
+                                <span class="text-[10px] font-black text-sky-400 uppercase tracking-widest flex items-center gap-1.5"><i class="fa-solid fa-bolt"></i> Operations Quick Launch</span>
+                                <h3 class="text-base sm:text-lg font-black text-white mt-0.5">TRY-1 Core Terminal Navigation</h3>
+                            </div>
+                            <span class="px-2.5 py-1 bg-sky-500/20 text-sky-300 rounded-full text-[10px] font-bold border border-sky-500/30">Terminal #01 Active</span>
                         </div>
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            <button onclick="switchView('counter')" class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg transition shadow">
-                                <i class="fa-solid fa-desktop mr-1"></i> Counter (RA #3195)
+                        <p class="text-xs text-slate-300 leading-relaxed">Direct 1-click access to active contracts, fleet registry, check-in/out terminals, and financial ledgers.</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                            <button onclick="switchView('counter')" class="p-3 bg-sky-600/90 hover:bg-sky-500 text-white text-xs font-black rounded-xl transition shadow flex items-center justify-center gap-2 border border-sky-400/30 group">
+                                <i class="fa-solid fa-file-signature text-sky-200 group-hover:scale-110 transition-transform"></i>
+                                <span>Counter (RA #3195)</span>
                             </button>
-                            <button onclick="switchView('accounting')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg transition shadow">
-                                <i class="fa-solid fa-file-invoice-dollar mr-1"></i> Accounting Ledger
+                            <button onclick="switchView('checkout')" class="p-3 bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs font-black rounded-xl transition shadow flex items-center justify-center gap-2 border border-emerald-400/30 group">
+                                <i class="fa-solid fa-arrow-right-from-bracket text-emerald-200 group-hover:scale-110 transition-transform"></i>
+                                <span>Check-Out</span>
+                            </button>
+                            <button onclick="switchView('fleet')" class="p-3 bg-amber-600/90 hover:bg-amber-500 text-white text-xs font-black rounded-xl transition shadow flex items-center justify-center gap-2 border border-amber-400/30 group">
+                                <i class="fa-solid fa-car text-amber-200 group-hover:scale-110 transition-transform"></i>
+                                <span>Fleet Inventory</span>
+                            </button>
+                            <button onclick="switchView('accounting')" class="p-3 bg-violet-600/90 hover:bg-violet-500 text-white text-xs font-black rounded-xl transition shadow flex items-center justify-center gap-2 border border-violet-400/30 group">
+                                <i class="fa-solid fa-file-invoice-dollar text-violet-200 group-hover:scale-110 transition-transform"></i>
+                                <span>P&amp;L Ledger</span>
                             </button>
                         </div>
                     </div>
@@ -848,7 +861,7 @@
                             <!-- Duration Result Banner -->
                             <div class="p-2.5 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg border border-sky-200 flex justify-between items-center text-xs mt-2 shadow-sm">
                                 <span class="font-bold text-sky-900 flex items-center gap-1.5"><i class="fa-solid fa-calculator text-sky-600"></i> Total Duration:</span>
-                                <span id="contract-duration-badge" class="font-black text-sky-700 bg-white px-2.5 py-1 rounded-md border border-sky-300 shadow-sm text-xs">7 Days (1 Week)</span>
+                                <span id="contract-duration-badge" class="font-black text-sky-700 bg-white px-2.5 py-1 rounded-md border border-sky-300 shadow-sm text-xs">7 Days (@ $26.99/day)</span>
                             </div>
                         </div>
 
@@ -931,13 +944,13 @@
                                     <span class="text-slate-500">Rate Code:</span>
                                     <span class="font-bold text-slate-900">WP (WALK-UP)</span>
                                 </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Daily Rate:</span>
-                                    <span class="font-bold text-slate-800">$27.99 / day</span>
+                                <div class="flex justify-between items-center bg-sky-50 p-1.5 rounded text-sky-900">
+                                    <span class="font-bold">Daily Rate:</span>
+                                    <span class="font-mono font-black text-sm">$26.99 / day</span>
                                 </div>
-                                <div class="flex justify-between items-center text-sky-800 bg-sky-50 p-1.5 rounded">
-                                    <span class="font-bold">Weekly Rate:</span>
-                                    <span class="font-mono font-black text-sm">$160.93 / week</span>
+                                <div class="flex justify-between text-xs text-slate-600">
+                                    <span class="text-slate-500">Rate Calculation:</span>
+                                    <span class="font-bold text-slate-800">Days &times; $26.99 (Direct Day Calc)</span>
                                 </div>
                                 <div class="flex justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-100">
                                     <span>Free Allowance:</span>
@@ -964,15 +977,21 @@
                             </div>
 
                             <!-- Quick Action Buttons -->
-                            <div class="grid grid-cols-2 gap-2 pt-1 no-print">
-                                <button onclick="switchView('checkout')" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-sm">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                    <span>Check-Out</span>
-                                </button>
-                                <button onclick="switchView('checkin')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-sm">
-                                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                                    <span>Check-In</span>
-                                </button>
+                            <div class="pt-2 no-print">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                                    <span>Immediate Terminal Actions:</span>
+                                    <span class="text-sky-600 font-normal text-[10px]">1-Click Jump</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="switchView('checkout')" class="w-full py-3 px-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-xl text-xs font-black transition-all flex items-center justify-center space-x-1.5 shadow-md shadow-emerald-700/20 border border-emerald-500 group">
+                                        <i class="fa-solid fa-arrow-right-from-bracket text-emerald-200 group-hover:scale-110 transition-transform"></i>
+                                        <span>Check-Out</span>
+                                    </button>
+                                    <button onclick="switchView('checkin')" class="w-full py-3 px-2 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-xl text-xs font-black transition-all flex items-center justify-center space-x-1.5 shadow-md shadow-blue-700/20 border border-blue-500 group">
+                                        <i class="fa-solid fa-arrow-right-to-bracket text-blue-200 group-hover:scale-110 transition-transform"></i>
+                                        <span>Check-In</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -1141,7 +1160,30 @@
                                         <option>Direct Retail Customer</option>
                                     </select>
                                 </div>
+                    </div>
+
+                    <!-- Persistent Bottom Action Bar for Contract Workspace -->
+                    <div class="p-3.5 bg-slate-900 text-white rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg border border-slate-800 no-print mt-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-sky-600/30 text-sky-400 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-bolt"></i></span>
+                            <div>
+                                <span class="font-bold text-xs text-white">Direct Terminal Operations (RA #3195)</span>
+                                <p class="text-[10px] text-slate-400">Jump directly into vehicle handover or final return inspection</p>
                             </div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                            <button onclick="switchView('checkout')" class="flex-1 sm:flex-none px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black rounded-lg transition shadow flex items-center justify-center gap-1.5 border border-emerald-500">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span>Go to Check-Out</span>
+                            </button>
+                            <button onclick="switchView('checkin')" class="flex-1 sm:flex-none px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black rounded-lg transition shadow flex items-center justify-center gap-1.5 border border-blue-500">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                <span>Go to Check-In</span>
+                            </button>
+                            <button onclick="openPrintAgreementModal()" class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 border border-slate-700">
+                                <i class="fa-solid fa-print text-sky-400"></i>
+                                <span>Print Contract</span>
+                            </button>
                         </div>
                     </div>
 
@@ -1448,82 +1490,237 @@
             <!-- 6. FLEET MANAGEMENT VIEW                                                 -->
             <!-- ========================================================================= -->
             <div id="view-fleet" class="view-panel space-y-4 sm:space-y-6 hidden">
+                <!-- Fleet Header -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex items-center space-x-3 sm:space-x-4">
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-amber-600 text-white flex items-center justify-center text-base sm:text-lg shadow-sm flex-shrink-0">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center text-base sm:text-lg shadow-sm flex-shrink-0">
                             <i class="fa-solid fa-car"></i>
                         </div>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Fleet Inventory & Real-Time Status</h2>
-                            <p class="text-xs text-slate-500">Live vehicle locations, odometer readings, and service intervals (42 Vehicles)</p>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Fleet Inventory &amp; Live Status</h2>
+                            <p class="text-xs text-slate-500">Live vehicle availability, mileage, and maintenance tracking (42 Vehicles)</p>
                         </div>
                     </div>
-                    <button onclick="showToast('Adding new vehicle to fleet registry...')" class="w-full sm:w-auto px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-sm">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Add New Vehicle</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="showToast('Filter: Showing all 42 vehicles')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1 border border-slate-300">
+                            <i class="fa-solid fa-filter text-slate-500"></i> All Fleet (42)
+                        </button>
+                        <button onclick="showToast('Opening Add Vehicle registry modal...')" class="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Vehicle</span>
+                        </button>
+                    </div>
                 </div>
 
+                <!-- Fleet KPI Status Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Fleet</span>
+                            <h3 class="text-lg sm:text-2xl font-black text-slate-900 mt-0.5">42 Vehicles</h3>
+                        </div>
+                        <span class="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-warehouse"></i></span>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">On Active Rent</span>
+                            <h3 class="text-lg sm:text-2xl font-black text-amber-600 mt-0.5">24 Cars</h3>
+                        </div>
+                        <span class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-key"></i></span>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Ready / Available</span>
+                            <h3 class="text-lg sm:text-2xl font-black text-emerald-600 mt-0.5">16 Cars</h3>
+                        </div>
+                        <span class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-circle-check"></i></span>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">In Maintenance</span>
+                            <h3 class="text-lg sm:text-2xl font-black text-rose-600 mt-0.5">2 Cars</h3>
+                        </div>
+                        <span class="w-9 h-9 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-wrench"></i></span>
+                    </div>
+                </div>
+
+                <!-- Fleet Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     <!-- Unit 1 -->
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 hover:border-sky-300 transition">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="text-xs font-bold text-sky-700 font-mono">UNIT # COR 01</span>
+                                <span class="text-xs font-black text-sky-700 font-mono">UNIT # COR 01</span>
                                 <h4 class="text-sm font-bold text-slate-900">Toyota Corolla 2024</h4>
-                                <span class="text-[11px] text-slate-500">Compact &bull; Plate: BC-8821</span>
+                                <span class="text-[11px] text-slate-500">Compact Sedan &bull; Plate: BC-8821</span>
                             </div>
-                            <span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded-full">ON RENT (RA #3195)</span>
+                            <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded-full border border-amber-300">ON RENT (RA #3195)</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-100">
-                            <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800">208,616 mi</span></div>
-                            <div><span class="text-slate-400 block text-[10px]">Fuel:</span><span class="font-bold text-slate-800">Full Tank (100%)</span></div>
+                            <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800 font-mono">208,616 mi</span></div>
+                            <div><span class="text-slate-400 block text-[10px]">Fuel:</span><span class="font-bold text-slate-800">8/8 Full (100%)</span></div>
                         </div>
-                        <button onclick="switchView('counter')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
-                            View Contract #3195
-                        </button>
+                        <div class="flex gap-2 pt-1">
+                            <button onclick="switchView('counter')" class="flex-1 py-2 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-xs rounded-lg transition border border-sky-200">
+                                View RA #3195
+                            </button>
+                            <button onclick="openPrintAgreementModal()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition">
+                                <i class="fa-solid fa-print"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Unit 2 -->
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 hover:border-emerald-300 transition">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="text-xs font-bold text-sky-700 font-mono">UNIT # SUV 04</span>
+                                <span class="text-xs font-black text-sky-700 font-mono">UNIT # SUV 04</span>
                                 <h4 class="text-sm font-bold text-slate-900">Ford Explorer 2025</h4>
                                 <span class="text-[11px] text-slate-500">Full-Size SUV &bull; Plate: BC-3390</span>
                             </div>
-                            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full">AVAILABLE</span>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full border border-emerald-300">AVAILABLE</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-100">
-                            <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800">45,120 mi</span></div>
+                            <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800 font-mono">45,120 mi</span></div>
                             <div><span class="text-slate-400 block text-[10px]">Daily Rate:</span><span class="font-bold text-slate-800">$55.00 / day</span></div>
                         </div>
-                        <button onclick="switchView('checkout')" class="w-full py-2 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-lg transition">
-                            Create New Rental
+                        <button onclick="switchView('checkout')" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg transition shadow">
+                            Dispatch &bull; Check-Out
                         </button>
                     </div>
 
                     <!-- Unit 3 -->
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 hover:border-blue-300 transition">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="text-xs font-bold text-sky-700 font-mono">UNIT # LUX 02</span>
+                                <span class="text-xs font-black text-sky-700 font-mono">UNIT # LUX 02</span>
                                 <h4 class="text-sm font-bold text-slate-900">BMW 330i 2024</h4>
                                 <span class="text-[11px] text-slate-500">Luxury Sedan &bull; Plate: BC-1192</span>
                             </div>
-                            <span class="px-2 py-0.5 bg-blue-100 text-blue-800 font-bold text-[10px] rounded-full">IN SERVICE</span>
+                            <span class="px-2.5 py-0.5 bg-blue-100 text-blue-800 font-bold text-[10px] rounded-full border border-blue-300">IN SERVICE</span>
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-100">
-                            <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800">18,400 mi</span></div>
-                            <div><span class="text-slate-400 block text-[10px]">Service:</span><span class="font-bold text-slate-800">Routine Maintenance</span></div>
+                            <div><span class="text-slate-400 block text-[10px]">Odometer:</span><span class="font-bold text-slate-800 font-mono">18,400 mi</span></div>
+                            <div><span class="text-slate-400 block text-[10px]">Status:</span><span class="font-bold text-blue-700">Oil &amp; Brake Service</span></div>
                         </div>
-                        <button onclick="showToast('Opening vehicle service maintenance log...')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
-                            Service Details
+                        <button onclick="showToast('Service log for LUX 02 opened')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
+                            Service Maintenance Log
                         </button>
                     </div>
                 </div>
             </div>
 
+
+            <!-- ========================================================================= -->
+            <!-- 8. CONTRACT & RESERVATION AUDIT CENTER (view-reports)                     -->
+            <!-- ========================================================================= -->
+            <div id="view-reports" class="view-panel space-y-4 sm:space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center space-x-3 sm:space-x-4">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center text-base sm:text-lg shadow-sm flex-shrink-0">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Contract &amp; Reservation Audit Center</h2>
+                            <p class="text-xs text-slate-500">Live inspection, rate verification, deposit audit, and operator activity log</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="showToast('Exporting Audit Report (Excel/PDF)...')" class="px-3.5 py-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-file-export text-slate-500"></i> Export Audit
+                        </button>
+                        <button onclick="showToast('Refreshing audit records...')" class="px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-rotate"></i> Run Live Audit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Audit Metric Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Audited Contracts</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-slate-900 mt-1">128 Contracts</h3>
+                        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">100% Reconciled</p>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Security Deposits</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-amber-600 mt-1 font-mono">$5,460.00</h3>
+                        <p class="text-[10px] text-amber-700 font-semibold mt-0.5">13 Active Holds</p>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Toll &amp; Ticket Audits</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-sky-600 mt-1">0 Pending</h3>
+                        <p class="text-[10px] text-sky-700 font-semibold mt-0.5">All 407 ETR Billed</p>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Compliance Rating</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-emerald-600 mt-1">99.8%</h3>
+                        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Clean Insurance Audits</p>
+                    </div>
+                </div>
+
+                <!-- Audit Log Table -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-3.5 sm:p-4 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                        <span class="font-bold text-xs text-slate-800">Recent Contract Transactions &amp; Audit Trail</span>
+                        <span class="text-[11px] text-slate-500">Terminal: WestEnd Branch &bull; Agent: CS-04</span>
+                    </div>
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left text-xs whitespace-nowrap">
+                            <thead class="bg-slate-100/75 text-slate-600 font-bold text-[11px] uppercase border-b">
+                                <tr>
+                                    <th class="p-3">RA Number</th>
+                                    <th class="p-3">Customer Name</th>
+                                    <th class="p-3">Vehicle &amp; Unit</th>
+                                    <th class="p-3">Rental Dates</th>
+                                    <th class="p-3">Amount</th>
+                                    <th class="p-3">Deposit Held</th>
+                                    <th class="p-3">Audit Status</th>
+                                    <th class="p-3 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-black text-sky-700 font-mono">RA #3195</td>
+                                    <td class="p-3 font-bold text-slate-900">Patrick Johnson</td>
+                                    <td class="p-3">Toyota Corolla (COR 01)</td>
+                                    <td class="p-3 text-slate-600">09/17 &rarr; 09/24/2026</td>
+                                    <td class="p-3 font-bold font-mono text-slate-900">$262.14</td>
+                                    <td class="p-3 font-bold font-mono text-amber-700">$420.00 (Cash)</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full">&#10003; Audited &amp; Active</span></td>
+                                    <td class="p-3 text-right">
+                                        <button onclick="switchView('counter')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold rounded text-[11px]">View Contract</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-black text-sky-700 font-mono">RA #3194</td>
+                                    <td class="p-3 font-bold text-slate-900">Sarah Jenkins</td>
+                                    <td class="p-3">Ford Explorer (SUV 04)</td>
+                                    <td class="p-3 text-slate-600">09/15 &rarr; 09/22/2026</td>
+                                    <td class="p-3 font-bold font-mono text-slate-900">$385.00</td>
+                                    <td class="p-3 font-bold font-mono text-emerald-700">$500.00 (CC Auth)</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full">&#10003; Verified Clean</span></td>
+                                    <td class="p-3 text-right">
+                                        <button onclick="showToast('Viewing audit details for RA #3194...')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded text-[11px]">Details</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-black text-sky-700 font-mono">RA #3193</td>
+                                    <td class="p-3 font-bold text-slate-900">Michael Chang</td>
+                                    <td class="p-3">BMW 330i (LUX 02)</td>
+                                    <td class="p-3 text-slate-600">09/10 &rarr; 09/17/2026</td>
+                                    <td class="p-3 font-bold font-mono text-slate-900">$540.00</td>
+                                    <td class="p-3 font-bold font-mono text-slate-500">$500.00 (Released)</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-800 font-bold text-[10px] rounded-full">&#10003; Closed &amp; Returned</span></td>
+                                    <td class="p-3 text-right">
+                                        <button onclick="showToast('Viewing closed archive for RA #3193...')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded text-[11px]">Archive</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
             <!-- ========================================================================= -->
             <!-- 7. MARKETING & RATES (PRICING, SOURCE, REFERRALS, ETC)                    -->
@@ -2160,13 +2357,12 @@
                       </thead>
                       <tbody>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">MILES @ $0.10</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">DAYS @ $27.99</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;color:#aaa;">&mdash;</td></tr>
-                        <tr style="background:#eff6ff;"><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">WEEKS @ $160.93</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;font-weight:700;text-align:right;">$160.93</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">CDW @ $10.00/day x7</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$70.00</td></tr>
+                        <tr style="background:#eff6ff;"><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">DAYS @ $26.99 (x 7 Days)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;font-weight:700;text-align:right;">$188.93</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">CDW @ $10.00/day (x 7 Days)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$70.00</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">GPS FEE</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">FUEL</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$3.50</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">HST (13%)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$27.71</td></tr>
-                        <tr style="background:#f0fdf4;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;">TOTAL CHARGES</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;color:#0369a1;">$262.14</td></tr>
+                        <tr style="background:#f0fdf4;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;">TOTAL CHARGES (7 Days)</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;color:#0369a1;">$262.43</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">LESS DEPOSITS</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;color:#dc2626;">$420.00</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">NET DUE MEMBER</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
                         <tr style="background:#fffbeb;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;text-transform:uppercase;">Amount Due</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;font-size:11px;">$0.00</td></tr>
@@ -2179,7 +2375,7 @@
                 <!-- INSURANCE SECTION -->
                 <div style="border:1px solid #bbb;padding:2px 5px;margin-bottom:3px;font-size:7px;line-height:1.3;">
                   <strong>INSURANCE:</strong> The COMPANY has obtained all necessary automobile insurance as required by law. The MEMBER acknowledges receipt of a copy of the insurance policy document and agrees that the insured vehicle is being rented under the terms and conditions of the insurance policy which are made a part of this rental agreement.
-                  &nbsp;&bull;&nbsp;<strong>$20.00 PER DAY</strong> &nbsp;&bull;&nbsp; <strong>$160.93 PER WEEK</strong>
+                  &nbsp;&bull;&nbsp;<strong>$26.99 PER DAY</strong> (Calculated by Total Days)
                 </div>
 
                 <!-- SIGNATURE LINES -->
@@ -2530,19 +2726,9 @@
             const diffMs = d2 - d1;
             const diffDays = Math.max(1, Math.round(diffMs / (1000 * 60 * 60 * 24)));
             
-            let label = "";
-            if (diffDays === 7) {
-                label = "7 Days (1 Week)";
-            } else if (diffDays % 7 === 0) {
-                const w = diffDays / 7;
-                label = `${diffDays} Days (${w} Weeks)`;
-            } else if (diffDays > 7) {
-                const w = Math.floor(diffDays / 7);
-                const r = diffDays % 7;
-                label = `${diffDays} Days (${w} Wk, ${r} Day${r > 1 ? "s" : ""})`;
-            } else {
-                label = `${diffDays} Day${diffDays > 1 ? "s" : ""}`;
-            }
+            const ratePerDay = 26.99;
+            const totalEstimated = (diffDays * ratePerDay).toFixed(2);
+            const label = `${diffDays} Day${diffDays > 1 ? "s" : ""} (@ $26.99/day = $${totalEstimated})`;
             
             badge.innerText = label;
             badge.classList.add("bg-emerald-100", "text-emerald-900");
