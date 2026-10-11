@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,6 +49,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet.js Map CDN for Live Fleet GPS Tracking -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <style>
         body {
@@ -174,6 +177,26 @@
                 size: A4 portrait;
             }
         }
+
+        /* ═══ LIVE GPS LEAFLET CUSTOM STYLES ═══ */
+        .leaflet-popup-content-wrapper {
+            border-radius: 14px !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+        .leaflet-popup-content {
+            margin: 0 !important;
+            line-height: 1.4 !important;
+        }
+        .leaflet-container {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+        .custom-gps-pin {
+            background: transparent !important;
+            border: none !important;
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased flex h-screen overflow-hidden text-[13px]">
@@ -276,6 +299,15 @@
                     <i class="fa-solid fa-car text-amber-400 w-4 text-center"></i>
                     <span>Fleet Management</span>
                     <span class="ml-auto bg-slate-800 text-slate-400 text-[10px] px-2 py-0.5 rounded-full">11 Cars</span>
+                </button>
+                <button onclick="switchView('gps', this)" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 lg:py-2 rounded-lg text-xs font-bold text-cyan-300 hover:bg-slate-800/60 hover:text-cyan-100 transition group">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    </span>
+                    <i class="fa-solid fa-satellite-dish text-cyan-400 w-4 text-center"></i>
+                    <span>Live GPS Fleet Tracking</span>
+                    <span class="ml-auto bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">LIVE</span>
                 </button>
                 <button onclick="switchView('accounting', this)" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 lg:py-2 rounded-lg text-xs font-bold text-emerald-300 hover:bg-slate-800/60 hover:text-emerald-200 transition">
                     <i class="fa-solid fa-file-invoice-dollar text-emerald-400 w-4 text-center"></i>
@@ -542,6 +574,27 @@
                         </h3>
                         <button onclick="showToast('Drag and drop to rearrange favourites (coming soon)')" class="text-[10px] text-sky-600 hover:text-sky-800 font-bold no-print">&#9998; Edit</button>
                     </div>
+                    <!-- Quick GPS Telematics & Live Map Launcher Banner -->
+                    <div class="mb-3 p-3 bg-gradient-to-r from-slate-900 to-sky-950 text-white rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border border-cyan-500/30 shadow-md">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-cyan-600/30 border border-cyan-400/40 text-cyan-300 flex items-center justify-center font-bold text-base shadow flex-shrink-0">
+                                <i class="fa-solid fa-satellite-dish"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-extrabold text-xs text-white">Live Fleet GPS &amp; Telematics Platform</span>
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-bold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> 11 Units Online
+                                    </span>
+                                </div>
+                                <p class="text-[10px] text-slate-300">Track 11 vehicles across Toronto/GTA, monitor speeds &amp; remote engine immobilizer</p>
+                            </div>
+                        </div>
+                        <button onclick="switchView('gps')" class="px-3.5 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs rounded-lg transition shadow flex items-center gap-1.5 flex-shrink-0">
+                            <i class="fa-solid fa-map-location-dot"></i> Open Live Map
+                        </button>
+                    </div>
+
                     <!-- Quick Parking Ticket / Toll Cross-Reference Modal Trigger -->
                     <div class="mb-3 p-3 bg-amber-50 border border-amber-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                         <div class="flex items-center gap-2">
@@ -622,11 +675,20 @@
                         </button>
 
                         <!-- 9: By Date/Time/License (Ticket Lookup) -->
-                        <button onclick="openTicketLookupModal()" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-amber-100 hover:bg-amber-200 border-2 border-amber-400 transition group shadow-sm col-span-2 sm:col-span-1 lg:col-span-2">
+                        <button onclick="openTicketLookupModal()" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 transition group shadow-sm">
                             <div class="w-9 h-9 rounded-lg bg-amber-600 text-white flex items-center justify-center shadow group-hover:bg-amber-700 transition">
                                 <i class="fa-solid fa-id-card-clip text-sm"></i>
                             </div>
-                            <span class="text-[11px] font-black text-amber-950 text-center leading-tight">By Date/Time/License (Tickets)</span>
+                            <span class="text-[11px] font-bold text-amber-950 text-center leading-tight">Ticket Lookup</span>
+                        </button>
+
+                        <!-- 10: Live Fleet GPS Tracking -->
+                        <button onclick="switchView('gps')" class="fav-btn flex flex-col items-center gap-1.5 p-3 rounded-xl bg-cyan-50 hover:bg-cyan-100 border border-cyan-300 transition group shadow-sm">
+                            <div class="w-9 h-9 rounded-lg bg-cyan-600 text-white flex items-center justify-center shadow group-hover:bg-cyan-700 transition relative">
+                                <i class="fa-solid fa-satellite-dish text-sm"></i>
+                                <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-cyan-950 text-center leading-tight">Live Fleet GPS</span>
                         </button>
                     </div>
                 </div>
@@ -2097,15 +2159,108 @@
                 </div>
             </div>
 
-            <!-- DEALERSHIPS VIEW -->
-            <div id="view-dealerships" class="view-panel space-y-4 sm:space-y-5 hidden">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h2 class="text-lg sm:text-xl font-black text-slate-900">Dealership & Body Shop Direct Accounts</h2>
-                    <p class="text-xs text-slate-500">Authorized B2B billing for service loaner vehicles</p>
+            <!-- DEALERSHIPS & PARTNERS VIEW -->
+            <div id="view-dealerships" class="view-panel space-y-4 sm:space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center space-x-3 sm:space-x-4">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-sky-600 text-white flex items-center justify-center text-base sm:text-lg shadow-sm flex-shrink-0">
+                            <i class="fa-solid fa-handshake"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-black text-slate-900">Partner &amp; Dealership B2B Accounts</h2>
+                            <p class="text-xs text-slate-500">Direct corporate billing, insurance replacement &amp; collision center loaner accounts</p>
+                        </div>
+                    </div>
+                    <button onclick="showToast('Opening Add New Partner Account modal...')" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
+                        <i class="fa-solid fa-plus"></i> Add Partner Account
+                    </button>
                 </div>
-                <div class="bg-white p-5 rounded-xl border space-y-2 text-xs">
-                    <div class="flex justify-between p-3 bg-slate-50 rounded"><span>WestEnd Auto Body Collision Center</span><strong>Account #ACT-9901 &bull; Active</strong></div>
-                    <div class="flex justify-between p-3 bg-slate-50 rounded"><span>Richmond Toyota Service Department</span><strong>Account #ACT-4412 &bull; Active</strong></div>
+
+                <!-- Partner Metrics -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Active Partners</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-slate-900 mt-1">8 Accounts</h3>
+                        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">B2B Verified</p>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Active Loaners Out</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-sky-600 mt-1">6 Vehicles</h3>
+                        <p class="text-[10px] text-sky-700 font-semibold mt-0.5">ICBC Direct Billing</p>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Monthly B2B Revenue</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-emerald-600 mt-1 font-mono">$16,420.00</h3>
+                        <p class="text-[10px] text-emerald-700 font-semibold mt-0.5">Net 30 Invoicing</p>
+                    </div>
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Corporate Credit Limit</span>
+                        <h3 class="text-lg sm:text-2xl font-black text-amber-600 mt-1 font-mono">$50,000.00</h3>
+                        <p class="text-[10px] text-slate-500 mt-0.5">Approved Revolving</p>
+                    </div>
+                </div>
+
+                <!-- Partner Accounts Directory Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    <!-- Partner 1 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 hover:border-sky-300 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-black text-sky-700 font-mono">ACCOUNT #ACT-9901</span>
+                                <h4 class="text-sm font-bold text-slate-900">WestEnd Auto Body Collision</h4>
+                                <span class="text-[11px] text-slate-500">Collision &amp; Body Repair Partner</span>
+                            </div>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full border border-emerald-300">ACTIVE</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                            <div><strong>Contact:</strong> Dave Miller &bull; (416) 555-0188</div>
+                            <div><strong>Billing Terms:</strong> Net 30 Direct Direct Invoicing</div>
+                            <div><strong>Active Vehicles:</strong> 2 Loaners (COR 01, SUV 04)</div>
+                        </div>
+                        <button onclick="switchView('counter')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
+                            Create Partner Contract
+                        </button>
+                    </div>
+
+                    <!-- Partner 2 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 hover:border-sky-300 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-black text-sky-700 font-mono">ACCOUNT #ACT-4412</span>
+                                <h4 class="text-sm font-bold text-slate-900">Richmond Toyota Service Center</h4>
+                                <span class="text-[11px] text-slate-500">Dealership Warranty Loaner Partner</span>
+                            </div>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full border border-emerald-300">ACTIVE</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                            <div><strong>Contact:</strong> Sarah Wong &bull; (604) 555-0199</div>
+                            <div><strong>Billing Terms:</strong> Direct Dealership PO Billing</div>
+                            <div><strong>Active Vehicles:</strong> 3 Loaners Out</div>
+                        </div>
+                        <button onclick="switchView('counter')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
+                            Create Partner Contract
+                        </button>
+                    </div>
+
+                    <!-- Partner 3 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 hover:border-sky-300 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-black text-sky-700 font-mono">ACCOUNT #ACT-8820</span>
+                                <h4 class="text-sm font-bold text-slate-900">ICBC Insurance Replacement Fleet</h4>
+                                <span class="text-[11px] text-slate-500">Direct Insurance Replacement Provider</span>
+                            </div>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full border border-emerald-300">AUTHORIZED</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                            <div><strong>Contact:</strong> Claims Hotline &bull; 1-800-663-3051</div>
+                            <div><strong>Billing Terms:</strong> Direct Claim Billing (#CLM-8849)</div>
+                            <div><strong>Active Vehicles:</strong> 1 Replacement Vehicle</div>
+                        </div>
+                        <button onclick="switchView('counter')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition">
+                            Create Partner Contract
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -2322,6 +2477,171 @@
                 <div class="bg-white p-4 sm:p-5 rounded-xl border text-xs space-y-3">
                     <p>Partner: <strong>WestEnd Collision Center</strong> &bull; Client: <strong>ICBC Warranty Replacement</strong></p>
                     <button onclick="switchView('counter')" class="w-full sm:w-auto px-4 py-2 bg-sky-600 text-white rounded font-bold">Open Loaner Agreement</button>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- LIVE FLEET GPS & TELEMATICS PLATFORM (view-gps)                           -->
+            <!-- ========================================================================= -->
+            <div id="view-gps" class="view-panel space-y-4 sm:space-y-6 hidden">
+                <!-- Top Control Bar -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center space-x-3 sm:space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-600 text-white flex items-center justify-center text-lg shadow-sm flex-shrink-0">
+                            <i class="fa-solid fa-satellite-dish"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h2 class="text-lg sm:text-xl font-black text-slate-900">TRY-1 Telematics &amp; Live Fleet GPS</h2>
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span>Live Feed &bull; 11 Units Connected</span>
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">Real-time GPS tracking, 407 ETR corridor geofencing, on-board diagnostics &amp; starter immobilizer</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button onclick="centerGpsMap()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5 border border-slate-300 shadow-sm">
+                            <i class="fa-solid fa-crosshairs text-sky-600"></i> Center Fleet
+                        </button>
+                        <button onclick="toggleGeofence()" id="btn-toggle-geofence" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-lg text-xs font-bold transition flex items-center gap-1.5 border border-sky-300 shadow-sm">
+                            <i class="fa-solid fa-draw-polygon text-sky-600"></i> Geofence: GTA Zone
+                        </button>
+                        <button onclick="refreshGpsData()" class="px-3.5 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-rotate" id="gps-refresh-icon"></i> Refresh Telemetry
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Status Grid -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <!-- 1: Moving -->
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-emerald-300 transition" onclick="filterGpsList('moving')">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">In-Transit / Moving</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-black text-emerald-600 mt-1" id="gps-kpi-moving">4 Units</h3>
+                        <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Ignition ON &bull; Avg 54 km/h</p>
+                    </div>
+                    <!-- 2: Parked / Idle -->
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-sky-300 transition" onclick="filterGpsList('parked')">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Parked / Yard &amp; Lots</span>
+                            <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-black text-slate-800 mt-1" id="gps-kpi-parked">5 Units</h3>
+                        <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Ignition OFF &bull; Battery Safe</p>
+                    </div>
+                    <!-- 3: In Service / Shop -->
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-blue-200 shadow-sm cursor-pointer hover:border-blue-300 transition" onclick="filterGpsList('service')">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">In Service / Shop</span>
+                            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-black text-blue-600 mt-1" id="gps-kpi-service">1 Unit</h3>
+                        <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Nissan Murano (Inspection)</p>
+                    </div>
+                    <!-- 4: Boundary Alerts -->
+                    <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-rose-200 shadow-sm cursor-pointer hover:border-rose-400 transition bg-rose-50/30" onclick="filterGpsList('alert')">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-rose-600 uppercase tracking-wider">Geofence / Security Alert</span>
+                            <span class="w-2 h-2 rounded-full bg-rose-600 animate-ping"></span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-black text-rose-600 mt-1" id="gps-kpi-alert">1 Alert</h3>
+                        <p class="text-[10px] text-rose-700 font-bold mt-0.5">MUR 01 (Beyond GTA Limit)</p>
+                    </div>
+                </div>
+
+                <!-- Main Layout: Map (Left 65%) + Live Telemetry Feed (Right 35%) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    <!-- MAP COLUMN (8 cols out of 12) -->
+                    <div class="lg:col-span-8 flex flex-col space-y-3">
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                            <!-- Map Bar Header -->
+                            <div class="p-3 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-2 text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-map text-cyan-400"></i> Greater Toronto Area (GTA) Live Satellite Map</span>
+                                    <span class="text-[10px] text-slate-400 font-mono" id="gps-last-ping">Updated: Just now</span>
+                                </div>
+                                <!-- Quick Zoom Shortcuts -->
+                                <div class="flex items-center gap-1">
+                                    <button onclick="zoomToZone('westend')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded text-[10px] font-bold text-cyan-300 border border-slate-700">WestEnd Yard</button>
+                                    <button onclick="zoomToZone('yyz')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded text-[10px] font-bold text-slate-300 border border-slate-700">Pearson (YYZ)</button>
+                                    <button onclick="zoomToZone('downtown')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded text-[10px] font-bold text-slate-300 border border-slate-700">Downtown</button>
+                                    <button onclick="centerGpsMap()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded text-[10px] font-bold text-slate-300 border border-slate-700">All GTA</button>
+                                </div>
+                            </div>
+
+                            <!-- Leaflet Map Container -->
+                            <div class="relative w-full" style="height: 560px;">
+                                <div id="gps-fleet-map" class="w-full h-full z-0"></div>
+
+                                <!-- Floating Map Legend -->
+                                <div class="absolute bottom-3 left-3 z-[1000] bg-slate-900/90 backdrop-blur-md text-white px-3 py-2 rounded-lg text-[10px] font-medium border border-slate-700 shadow-xl flex items-center gap-3 pointer-events-auto">
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Moving</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400 inline-block"></span> Parked</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span> Service</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse inline-block"></span> Alert</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Telematics Speed & Diagnostic Stats Bar -->
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs">
+                            <div class="flex items-center gap-4">
+                                <div>
+                                    <span class="text-slate-400 text-[10px] block uppercase font-bold">Fastest Moving Unit</span>
+                                    <span class="font-extrabold text-slate-900">PAT 01 &bull; 88 km/h</span>
+                                </div>
+                                <div class="border-l border-slate-200 pl-4">
+                                    <span class="text-slate-400 text-[10px] block uppercase font-bold">Avg Fleet Voltage</span>
+                                    <span class="font-bold text-emerald-600 font-mono">13.2 V (Healthy)</span>
+                                </div>
+                                <div class="border-l border-slate-200 pl-4 hidden sm:block">
+                                    <span class="text-slate-400 text-[10px] block uppercase font-bold">407 ETR Transponder</span>
+                                    <span class="font-bold text-slate-800">11 Active Tags</span>
+                                </div>
+                            </div>
+                            <button onclick="showToast('Diagnostic log exported as CSV!')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-xs flex items-center gap-1.5 border border-slate-300">
+                                <i class="fa-solid fa-file-arrow-down"></i> Export OBD Log
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TELEMETRY & VEHICLE FEED COLUMN (4 cols out of 12) -->
+                    <div class="lg:col-span-4 flex flex-col space-y-3">
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-[650px]">
+                            <!-- Filter & Search Header -->
+                            <div class="p-3 border-b border-slate-200 space-y-2 bg-slate-50/70 rounded-t-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-tower-broadcast text-cyan-600"></i> Fleet Telemetry Feed
+                                    </span>
+                                    <span class="text-[10px] bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-full" id="gps-filtered-count">11 Units</span>
+                                </div>
+                                <!-- Search Input -->
+                                <div class="relative">
+                                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                                    <input type="text" id="gps-search-input" onkeyup="filterGpsSearch()" placeholder="Search unit, model, plate, or driver..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 font-medium">
+                                </div>
+                                <!-- Filter Pills -->
+                                <div class="flex items-center gap-1 overflow-x-auto custom-scrollbar pb-1 text-[10px] font-bold">
+                                    <button onclick="filterGpsList('all')" id="gps-tab-all" class="px-2.5 py-1 rounded-md bg-cyan-600 text-white flex-shrink-0 transition">All (11)</button>
+                                    <button onclick="filterGpsList('moving')" id="gps-tab-moving" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex-shrink-0 transition">Moving (4)</button>
+                                    <button onclick="filterGpsList('parked')" id="gps-tab-parked" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex-shrink-0 transition">Parked (5)</button>
+                                    <button onclick="filterGpsList('service')" id="gps-tab-service" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex-shrink-0 transition">Service (1)</button>
+                                    <button onclick="filterGpsList('alert')" id="gps-tab-alert" class="px-2.5 py-1 rounded-md bg-white border border-rose-300 text-rose-700 hover:bg-rose-50 flex-shrink-0 transition">Alert (1)</button>
+                                </div>
+                            </div>
+
+                            <!-- Scrollable Vehicles Telemetry List -->
+                            <div class="flex-1 overflow-y-auto p-2.5 space-y-2.5 custom-scrollbar" id="gps-vehicles-list">
+                                <!-- Populated dynamically by renderGpsVehicleList() -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2827,6 +3147,98 @@
         </div>
     </div>
 
+    <!-- ============================================== -->
+    <!-- INTERACTIVE MODAL: REMOTE STARTER RELAY LOCK   -->
+    <!-- ============================================== -->
+    <div id="starter-disable-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4 no-print">
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 max-h-[92vh] overflow-y-auto">
+            <div class="p-4 bg-gradient-to-r from-rose-700 to-red-900 text-white flex justify-between items-center">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-sm font-bold shadow">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-sm flex items-center gap-1.5">
+                            Remote Starter Relay Immobilizer
+                        </h3>
+                        <p class="text-[10px] text-rose-200">Electronic Fuel &amp; Ignition Cut Command</p>
+                    </div>
+                </div>
+                <button onclick="closeStarterDisableModal()" class="text-rose-200 hover:text-white text-xl p-1 font-bold">&times;</button>
+            </div>
+
+            <div class="p-5 space-y-4 text-xs">
+                <!-- Safety Warning Box -->
+                <div class="p-3 bg-rose-50 border border-rose-300 rounded-xl space-y-1">
+                    <div class="flex items-center gap-1.5 font-bold text-rose-900">
+                        <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
+                        <span>TRANSPORT SAFETY ADVISORY:</span>
+                    </div>
+                    <p class="text-rose-800 text-[11px] leading-relaxed">
+                        To prevent high-speed collisions, sending this command engages a <strong>conditional starter interlock</strong>. The engine relay will not cut abruptly while moving over 5 km/h; the starter will securely lock out the moment the vehicle comes to a complete stop or the ignition is turned off.
+                    </p>
+                </div>
+
+                <!-- Target Unit Info -->
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 grid grid-cols-2 gap-2">
+                    <div>
+                        <span class="text-slate-400 text-[10px] block font-bold">Target Vehicle:</span>
+                        <span class="font-black text-slate-900 text-xs" id="modal-starter-vehicle">2019 Nissan Murano</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 text-[10px] block font-bold">Plate / Unit:</span>
+                        <span class="font-mono font-bold text-sky-700" id="modal-starter-plate">ON-MUR19 (MUR 01)</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 text-[10px] block font-bold">Current Speed:</span>
+                        <span class="font-bold text-slate-800" id="modal-starter-speed">92 km/h</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 text-[10px] block font-bold">Last GPS Position:</span>
+                        <span class="font-bold text-slate-800 font-mono text-[11px]" id="modal-starter-pos">44.1500, -79.6500</span>
+                    </div>
+                </div>
+
+                <!-- Reason Selector -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Reason for Starter Immobilization</label>
+                    <select id="modal-starter-reason" class="w-full border border-slate-300 rounded-lg p-2 font-semibold text-slate-800 bg-white">
+                        <option value="breach">Geofence Boundary Breach (Unauthorized Jurisdiction)</option>
+                        <option value="overdue">Delinquent / Overdue Rental (Past Return Grace Period)</option>
+                        <option value="stolen">Suspected Theft / Police Recovery Assist</option>
+                        <option value="payment">Card Decline / Outstanding Unpaid Balance</option>
+                        <option value="test">Diagnostic Fleet Hardware Test</option>
+                    </select>
+                </div>
+
+                <!-- Authorization & Action -->
+                <div class="pt-2 space-y-2">
+                    <div class="flex items-center justify-between text-[11px] text-slate-500">
+                        <span>Authorized By: <strong>CS-04 (Agent #4)</strong></span>
+                        <span>Terminal: <strong>TRY-1 WestEnd</strong></span>
+                    </div>
+
+                    <div id="starter-progress-box" class="hidden p-3 bg-amber-50 border border-amber-300 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between font-bold text-amber-900 text-[11px]">
+                            <span id="starter-progress-label">Transmitting command to onboard ECU...</span>
+                            <span id="starter-progress-pct">40%</span>
+                        </div>
+                        <div class="w-full bg-amber-200 rounded-full h-2 overflow-hidden">
+                            <div id="starter-progress-bar" class="bg-amber-600 h-2 rounded-full transition-all duration-300" style="width: 40%"></div>
+                        </div>
+                    </div>
+
+                    <button onclick="executeStarterDisable()" id="btn-execute-starter" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition shadow flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-power-off"></i> Transmit Starter Lock Signal
+                    </button>
+                    <button onclick="closeStarterDisableModal()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification Banner -->
     <div id="toast" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-slate-900 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-2xl z-50 text-xs font-semibold flex items-center space-x-2.5 border border-slate-800 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none no-print max-w-[90vw]">
         <i class="fa-solid fa-circle-check text-emerald-400 text-sm flex-shrink-0" id="toast-icon"></i>
@@ -2885,6 +3297,9 @@
 
             if (viewName === 'accounting') {
                 setTimeout(initFinanceChart, 50);
+            }
+            if (viewName === 'gps') {
+                setTimeout(initGpsMap, 60);
             }
         }
 
@@ -3167,6 +3582,666 @@
                     simulateLicenseScanDemo();
                 }, 800);
             }
+        }
+
+        // =========================================================================
+        // LIVE FLEET GPS & TELEMATICS PLATFORM ENGINE
+        // =========================================================================
+        let gpsMap = null;
+        let gpsMarkers = {};
+        let gpsGeofenceLayer = null;
+        let isGeofenceVisible = true;
+        let currentGpsFilter = 'all';
+        let targetStarterVehicleId = null;
+
+        const gpsVehicles = [
+            {
+                id: "ROG 01",
+                model: "2019 Nissan Rogue",
+                plate: "ON-ROG91",
+                category: "SUV (AWD)",
+                lat: 43.7665,
+                lng: -79.4890,
+                speed: 48,
+                status: "moving",
+                location: "Keele St & Finch Ave W",
+                ignition: "ON",
+                battery: 13.8,
+                fuel: 85,
+                odometer: "72,450 km",
+                driver: "Available / Yard Transfer",
+                ra: null,
+                immobilized: false
+            },
+            {
+                id: "PAT 01",
+                model: "2019 Nissan Pathfinder",
+                plate: "ON-PTH19",
+                category: "7-Passenger SUV",
+                lat: 43.7310,
+                lng: -79.5420,
+                speed: 88,
+                status: "moving",
+                location: "Hwy 401 W near Hwy 400 Interch.",
+                ignition: "ON",
+                battery: 14.1,
+                fuel: 90,
+                odometer: "81,200 km",
+                driver: "On Test Drive / Available",
+                ra: null,
+                immobilized: false
+            },
+            {
+                id: "COR 01",
+                model: "2020 Toyota Corolla",
+                plate: "BC-8821",
+                category: "Medium Sedan",
+                lat: 43.7663,
+                lng: -79.4925,
+                speed: 0,
+                status: "parked",
+                location: "TRY-1 WestEnd HQ (4501 Keele Lot)",
+                ignition: "OFF",
+                battery: 12.6,
+                fuel: 100,
+                odometer: "208,616 mi",
+                driver: "Patrick Johnson (+1 604 555-0192)",
+                ra: "RA #3195",
+                immobilized: false
+            },
+            {
+                id: "MIC 01",
+                model: "2018 Nissan Micra",
+                plate: "ON-MIC18",
+                category: "Compact Hatchback",
+                lat: 43.7250,
+                lng: -79.4520,
+                speed: 0,
+                status: "parked",
+                location: "Yorkdale Shopping Center P3",
+                ignition: "OFF",
+                battery: 12.4,
+                fuel: 70,
+                odometer: "68,900 km",
+                driver: "Corporate Delivery Dropoff",
+                ra: null,
+                immobilized: false
+            },
+            {
+                id: "AUD 01",
+                model: "2018 Audi Q3",
+                plate: "ON-Q3018",
+                category: "Luxury Compact SUV",
+                lat: 43.6425,
+                lng: -79.3870,
+                speed: 58,
+                status: "moving",
+                location: "Gardiner Expressway E & York St",
+                ignition: "ON",
+                battery: 13.9,
+                fuel: 80,
+                odometer: "54,300 km",
+                driver: "VIP Corporate Client",
+                ra: "RA #3188",
+                immobilized: false
+            },
+            {
+                id: "JEP 01",
+                model: "2018 Jeep Cherokee",
+                plate: "ON-JEP88",
+                category: "SUV 4x4",
+                lat: 43.7910,
+                lng: -79.5280,
+                speed: 0,
+                status: "parked",
+                location: "Vaughan Mills Shopping Plaza",
+                ignition: "OFF",
+                battery: 12.5,
+                fuel: 65,
+                odometer: "79,150 km",
+                driver: "Available / Staging",
+                ra: null,
+                immobilized: false
+            },
+            {
+                id: "KIA 01",
+                model: "2020 Kia Soul",
+                plate: "ON-SOL20",
+                category: "Medium Crossover",
+                lat: 43.6820,
+                lng: -79.6120,
+                speed: 32,
+                status: "moving",
+                location: "Toronto Pearson Int Airport (YYZ Terminal 1)",
+                ignition: "ON",
+                battery: 13.7,
+                fuel: 75,
+                odometer: "48,200 km",
+                driver: "David Miller (+1 416 555-8931)",
+                ra: "RA #3198",
+                immobilized: false
+            },
+            {
+                id: "ESC 01",
+                model: "2019 Ford Escape",
+                plate: "ON-ESC19",
+                category: "Compact SUV",
+                lat: 43.7661,
+                lng: -79.4930,
+                speed: 0,
+                status: "parked",
+                location: "TRY-1 WestEnd HQ (Bay 4 Staging)",
+                ignition: "OFF",
+                battery: 12.5,
+                fuel: 95,
+                odometer: "66,800 km",
+                driver: "Ready for Dispatch",
+                ra: null,
+                immobilized: false
+            },
+            {
+                id: "CIV 01",
+                model: "2018 Honda Civic",
+                plate: "ON-CIV18",
+                category: "Medium Sedan",
+                lat: 43.7735,
+                lng: -79.5040,
+                speed: 0,
+                status: "parked",
+                location: "York University Keele Campus Lot",
+                ignition: "OFF",
+                battery: 12.3,
+                fuel: 60,
+                odometer: "75,300 km",
+                driver: "Available / Rental Hold",
+                ra: null,
+                immobilized: false
+            },
+            {
+                id: "MUR 01",
+                model: "2019 Nissan Murano",
+                plate: "ON-MUR19",
+                category: "Mid-Size SUV",
+                lat: 44.1500,
+                lng: -79.6500,
+                speed: 92,
+                status: "alert",
+                location: "Hwy 400 Northbound past Barrie - OUTSIDE GTA GEOFENCE",
+                ignition: "ON",
+                battery: 14.0,
+                fuel: 50,
+                odometer: "59,400 km",
+                driver: "Maintenance Relocation / Alert Logged",
+                ra: "SERVICE #88",
+                immobilized: false
+            },
+            {
+                id: "SON 01",
+                model: "2017 Hyundai Sonata",
+                plate: "ON-SON17",
+                category: "Full Size Sedan",
+                lat: 43.7664,
+                lng: -79.4920,
+                speed: 0,
+                status: "parked",
+                location: "TRY-1 WestEnd HQ (Detailing Bay)",
+                ignition: "OFF",
+                battery: 12.7,
+                fuel: 100,
+                odometer: "92,100 km",
+                driver: "Detailing / Final Cleaning",
+                ra: null,
+                immobilized: false
+            }
+        ];
+
+        const gtaGeofenceCoords = [
+            [43.52, -79.62],
+            [43.50, -79.74],
+            [43.68, -79.82],
+            [43.88, -79.78],
+            [44.02, -79.55],
+            [44.02, -79.22],
+            [43.88, -79.10],
+            [43.72, -79.12],
+            [43.60, -79.35],
+            [43.56, -79.52]
+        ];
+
+        function getMarkerIcon(v) {
+            let bgColor = 'bg-emerald-500';
+            let iconClass = 'fa-car';
+            let pulseHtml = '<span class="absolute -inset-1 rounded-full bg-emerald-400 opacity-60 animate-ping"></span>';
+
+            if (v.immobilized) {
+                bgColor = 'bg-slate-800';
+                iconClass = 'fa-lock';
+                pulseHtml = '';
+            } else if (v.status === 'alert') {
+                bgColor = 'bg-rose-600';
+                iconClass = 'fa-triangle-exclamation';
+                pulseHtml = '<span class="absolute -inset-1 rounded-full bg-rose-500 opacity-75 animate-ping"></span>';
+            } else if (v.status === 'service') {
+                bgColor = 'bg-blue-600';
+                iconClass = 'fa-wrench';
+                pulseHtml = '';
+            } else if (v.status === 'parked') {
+                bgColor = 'bg-sky-600';
+                iconClass = 'fa-square-parking';
+                pulseHtml = '';
+            }
+
+            return L.divIcon({
+                className: 'custom-gps-pin',
+                html: `
+                    <div class="relative flex items-center justify-center w-8 h-8 rounded-full ${bgColor} text-white shadow-lg border-2 border-white cursor-pointer transition-transform hover:scale-125">
+                        ${pulseHtml}
+                        <i class="fa-solid ${iconClass} text-xs relative z-10"></i>
+                    </div>
+                `,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -18]
+            });
+        }
+
+        function createGpsPopupContent(v) {
+            const statusBadge = v.immobilized 
+                ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-rose-300 border border-rose-500/40">IMMOBILIZED (STARTER CUT)</span>'
+                : (v.status === 'alert'
+                    ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300 animate-pulse">GEOFENCE BREACH ALERT</span>'
+                    : (v.status === 'moving'
+                        ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">MOVING &bull; ' + v.speed + ' km/h</span>'
+                        : '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-300">PARKED &bull; IGNITION OFF</span>'
+                    )
+                );
+
+            const starterBtn = v.immobilized
+                ? `<button onclick="restoreStarterRelay('${v.id}')" class="w-full py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded text-xs transition shadow flex items-center justify-center gap-1.5"><i class="fa-solid fa-key"></i> Restore Starter Relay</button>`
+                : `<button onclick="openStarterDisableModal('${v.id}')" class="w-full py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded text-xs transition shadow flex items-center justify-center gap-1.5"><i class="fa-solid fa-power-off"></i> Remote Starter Immobilizer</button>`;
+
+            return `
+                <div class="p-3 text-slate-800 text-xs min-w-[240px] space-y-2">
+                    <div class="flex justify-between items-start border-b border-slate-200 pb-2">
+                        <div>
+                            <span class="font-black text-sky-700 font-mono text-[11px]">${v.id}</span>
+                            <h4 class="font-bold text-slate-900 text-sm leading-tight">${v.model}</h4>
+                            <span class="text-[10px] text-slate-500 font-medium">Plate: ${v.plate}</span>
+                        </div>
+                        ${statusBadge}
+                    </div>
+
+                    <div class="space-y-1 text-[11px]">
+                        <div><strong class="text-slate-500">Location:</strong> <span class="font-semibold text-slate-800">${v.location}</span></div>
+                        <div class="flex justify-between">
+                            <span><strong class="text-slate-500">Speed:</strong> <span class="font-bold font-mono">${v.speed} km/h</span></span>
+                            <span><strong class="text-slate-500">Battery:</strong> <span class="font-bold font-mono text-emerald-600">${v.battery}V</span></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span><strong class="text-slate-500">Ignition:</strong> <span class="font-bold">${v.ignition}</span></span>
+                            <span><strong class="text-slate-500">Fuel:</strong> <span class="font-bold font-mono">${v.fuel}%</span></span>
+                        </div>
+                        <div><strong class="text-slate-500">Odometer:</strong> <span class="font-mono">${v.odometer}</span></div>
+                        <div><strong class="text-slate-500">Driver/Status:</strong> <span class="font-medium text-slate-700">${v.driver}</span></div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-200">
+                        ${starterBtn}
+                    </div>
+                </div>
+            `;
+        }
+
+        function initGpsMap() {
+            const mapContainer = document.getElementById('gps-fleet-map');
+            if (!mapContainer) return;
+
+            if (gpsMap) {
+                setTimeout(() => {
+                    gpsMap.invalidateSize();
+                }, 100);
+                return;
+            }
+
+            // Initialize Leaflet map
+            gpsMap = L.map('gps-fleet-map', {
+                center: [43.7663, -79.4925], // Centered at TRY-1 Keele HQ
+                zoom: 11,
+                scrollWheelZoom: true
+            });
+
+            // OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap contributors &bull; TRY-1 Telematics'
+            }).addTo(gpsMap);
+
+            // GTA Geofence polygon
+            gpsGeofenceLayer = L.polygon(gtaGeofenceCoords, {
+                color: '#0284c7',
+                fillColor: '#38bdf8',
+                fillOpacity: 0.08,
+                weight: 2,
+                dashArray: '6, 6'
+            }).addTo(gpsMap);
+            gpsGeofenceLayer.bindTooltip("Authorized Greater Toronto Area (GTA) Operating Geofence", { sticky: true });
+
+            // Plot markers for all 11 vehicles
+            gpsVehicles.forEach(v => {
+                const marker = L.marker([v.lat, v.lng], {
+                    icon: getMarkerIcon(v)
+                }).addTo(gpsMap);
+
+                marker.bindPopup(createGpsPopupContent(v));
+                gpsMarkers[v.id] = marker;
+            });
+
+            renderGpsVehicleList();
+
+            setTimeout(() => {
+                gpsMap.invalidateSize();
+            }, 200);
+        }
+
+        function renderGpsVehicleList(filter = currentGpsFilter, query = '') {
+            const listEl = document.getElementById('gps-vehicles-list');
+            if (!listEl) return;
+
+            const q = query.toLowerCase().trim();
+
+            const filtered = gpsVehicles.filter(v => {
+                if (filter === 'moving' && v.status !== 'moving') return false;
+                if (filter === 'parked' && v.status !== 'parked') return false;
+                if (filter === 'service' && v.status !== 'service') return false;
+                if (filter === 'alert' && v.status !== 'alert') return false;
+
+                if (q) {
+                    const matchId = v.id.toLowerCase().includes(q);
+                    const matchModel = v.model.toLowerCase().includes(q);
+                    const matchPlate = v.plate.toLowerCase().includes(q);
+                    const matchLoc = v.location.toLowerCase().includes(q);
+                    const matchDriver = v.driver.toLowerCase().includes(q);
+                    if (!matchId && !matchModel && !matchPlate && !matchLoc && !matchDriver) return false;
+                }
+                return true;
+            });
+
+            const countEl = document.getElementById('gps-filtered-count');
+            if (countEl) countEl.innerText = `${filtered.length} Units`;
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="p-6 text-center text-slate-400 text-xs">
+                        <i class="fa-solid fa-satellite-slash text-2xl mb-2 block"></i>
+                        No vehicles found matching "${query}" in this category.
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(v => {
+                let badgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                let badgeText = `${v.speed} km/h &bull; Moving`;
+                let iconColor = 'text-emerald-500';
+
+                if (v.immobilized) {
+                    badgeClass = 'bg-slate-900 text-rose-300 border-rose-500/40';
+                    badgeText = 'Starter Relay Cut';
+                    iconColor = 'text-slate-700';
+                } else if (v.status === 'alert') {
+                    badgeClass = 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse';
+                    badgeText = `${v.speed} km/h &bull; Boundary Alert`;
+                    iconColor = 'text-rose-500';
+                } else if (v.status === 'service') {
+                    badgeClass = 'bg-blue-100 text-blue-800 border-blue-300';
+                    badgeText = 'Service / Inspection';
+                    iconColor = 'text-blue-500';
+                } else if (v.status === 'parked') {
+                    badgeClass = 'bg-slate-100 text-slate-700 border-slate-300';
+                    badgeText = '0 km/h &bull; Parked';
+                    iconColor = 'text-sky-500';
+                }
+
+                return `
+                    <div class="p-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-sm transition space-y-2 text-xs">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-black text-sky-700 font-mono text-[11px]">${v.id}</span>
+                                <h4 class="font-bold text-slate-900">${v.model}</h4>
+                                <span class="text-[10px] text-slate-500">Plate: <strong class="font-mono text-slate-700">${v.plate}</strong> &bull; ${v.category}</span>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold border ${badgeClass}">
+                                ${badgeText}
+                            </span>
+                        </div>
+
+                        <div class="text-[11px] text-slate-600 space-y-0.5 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-1.5 truncate">
+                                <i class="fa-solid fa-location-dot ${iconColor} text-[10px] flex-shrink-0"></i>
+                                <span class="truncate font-medium">${v.location}</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] pt-1 border-t border-slate-200 text-slate-500">
+                                <span>Ignition: <strong class="${v.ignition === 'ON' ? 'text-emerald-600' : 'text-slate-700'}">${v.ignition}</strong></span>
+                                <span>Battery: <strong class="font-mono text-emerald-600">${v.battery}V</strong></span>
+                                <span>Fuel: <strong class="font-mono">${v.fuel}%</strong></span>
+                            </div>
+                            ${v.ra ? `<div class="text-[10px] text-sky-700 font-bold pt-0.5 flex items-center gap-1"><i class="fa-solid fa-file-contract"></i> ${v.ra} &bull; ${v.driver}</div>` : ''}
+                        </div>
+
+                        <div class="flex items-center gap-1.5 pt-1">
+                            <button onclick="locateGpsVehicle('${v.id}')" class="flex-1 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold rounded-lg transition border border-sky-200 text-center flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-crosshairs text-[10px]"></i> Track on Map
+                            </button>
+                            ${v.immobilized
+                                ? `<button onclick="restoreStarterRelay('${v.id}')" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition shadow text-[10px]" title="Restore Starter Relay"><i class="fa-solid fa-key"></i> Restore</button>`
+                                : `<button onclick="openStarterDisableModal('${v.id}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold rounded-lg transition text-[10px]" title="Remote Starter Relay Immobilizer"><i class="fa-solid fa-power-off"></i> Relay Lock</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function locateGpsVehicle(unitId) {
+            const v = gpsVehicles.find(x => x.id === unitId);
+            if (!v || !gpsMap) return;
+
+            gpsMap.setView([v.lat, v.lng], 16, { animate: true });
+            const marker = gpsMarkers[unitId];
+            if (marker) {
+                marker.openPopup();
+            }
+            showToast(`Tracking ${v.id} (${v.model}) &bull; ${v.location}`);
+        }
+
+        function centerGpsMap() {
+            if (!gpsMap) return;
+            const group = new L.featureGroup(Object.values(gpsMarkers));
+            gpsMap.fitBounds(group.getBounds().pad(0.12));
+            showToast("Centered view on all 11 fleet units.");
+        }
+
+        function toggleGeofence() {
+            if (!gpsMap || !gpsGeofenceLayer) return;
+            const btn = document.getElementById('btn-toggle-geofence');
+            if (isGeofenceVisible) {
+                gpsMap.removeLayer(gpsGeofenceLayer);
+                isGeofenceVisible = false;
+                if (btn) {
+                    btn.classList.remove('bg-sky-50', 'text-sky-800', 'border-sky-300');
+                    btn.classList.add('bg-slate-100', 'text-slate-600', 'border-slate-300');
+                }
+                showToast("Geofence layer hidden.");
+            } else {
+                gpsMap.addLayer(gpsGeofenceLayer);
+                isGeofenceVisible = true;
+                if (btn) {
+                    btn.classList.remove('bg-slate-100', 'text-slate-600', 'border-slate-300');
+                    btn.classList.add('bg-sky-50', 'text-sky-800', 'border-sky-300');
+                }
+                showToast("GTA Geofence active.");
+            }
+        }
+
+        function zoomToZone(zone) {
+            if (!gpsMap) return;
+            if (zone === 'westend') {
+                gpsMap.setView([43.7663, -79.4925], 16);
+                showToast("Zoomed to TRY-1 WestEnd HQ Lot (4501 Keele St)");
+            } else if (zone === 'yyz') {
+                gpsMap.setView([43.6820, -79.6120], 14);
+                showToast("Zoomed to Toronto Pearson International Airport");
+            } else if (zone === 'downtown') {
+                gpsMap.setView([43.6450, -79.3850], 14);
+                showToast("Zoomed to Downtown Toronto Core / Gardiner");
+            }
+        }
+
+        function filterGpsList(category) {
+            currentGpsFilter = category;
+            const tabs = ['all', 'moving', 'parked', 'service', 'alert'];
+            tabs.forEach(t => {
+                const tabBtn = document.getElementById(`gps-tab-${t}`);
+                if (!tabBtn) return;
+                if (t === category) {
+                    tabBtn.className = t === 'alert' 
+                        ? 'px-2.5 py-1 rounded-md bg-rose-600 text-white flex-shrink-0 transition font-bold'
+                        : 'px-2.5 py-1 rounded-md bg-cyan-600 text-white flex-shrink-0 transition font-bold';
+                } else {
+                    tabBtn.className = t === 'alert'
+                        ? 'px-2.5 py-1 rounded-md bg-white border border-rose-300 text-rose-700 hover:bg-rose-50 flex-shrink-0 transition font-bold'
+                        : 'px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex-shrink-0 transition font-bold';
+                }
+            });
+
+            const searchInput = document.getElementById('gps-search-input');
+            const q = searchInput ? searchInput.value : '';
+            renderGpsVehicleList(category, q);
+        }
+
+        function filterGpsSearch() {
+            const searchInput = document.getElementById('gps-search-input');
+            const q = searchInput ? searchInput.value : '';
+            renderGpsVehicleList(currentGpsFilter, q);
+        }
+
+        function refreshGpsData() {
+            const icon = document.getElementById('gps-refresh-icon');
+            if (icon) icon.classList.add('fa-spin');
+
+            showToast("Querying on-board telematics GPS transponders...");
+
+            setTimeout(() => {
+                if (icon) icon.classList.remove('fa-spin');
+
+                // Simulate slight dynamic speed and GPS drift
+                gpsVehicles.forEach(v => {
+                    if (v.status === 'moving' && !v.immobilized) {
+                        v.speed = Math.max(20, Math.min(105, v.speed + Math.floor(Math.random() * 7 - 3)));
+                        v.lat += (Math.random() - 0.5) * 0.0006;
+                        v.lng += (Math.random() - 0.5) * 0.0006;
+
+                        if (gpsMarkers[v.id]) {
+                            gpsMarkers[v.id].setLatLng([v.lat, v.lng]);
+                            gpsMarkers[v.id].setPopupContent(createGpsPopupContent(v));
+                        }
+                    }
+                });
+
+                const pingEl = document.getElementById('gps-last-ping');
+                if (pingEl) {
+                    const now = new Date();
+                    pingEl.innerText = `Updated: ${now.toLocaleTimeString()}`;
+                }
+
+                renderGpsVehicleList();
+                showToast("Satellite Telemetry Live: 11/11 Vehicles Pinged OK!");
+            }, 800);
+        }
+
+        function openStarterDisableModal(unitId) {
+            const v = gpsVehicles.find(x => x.id === unitId) || gpsVehicles[9]; // default to MUR 01
+            targetStarterVehicleId = v.id;
+
+            document.getElementById('modal-starter-vehicle').innerText = `${v.model}`;
+            document.getElementById('modal-starter-plate').innerText = `${v.plate} (${v.id})`;
+            document.getElementById('modal-starter-speed').innerText = `${v.speed} km/h &bull; Ignition ${v.ignition}`;
+            document.getElementById('modal-starter-pos').innerText = `${v.lat.toFixed(4)}, ${v.lng.toFixed(4)}`;
+
+            // Reset progress
+            document.getElementById('starter-progress-box').classList.add('hidden');
+            document.getElementById('btn-execute-starter').classList.remove('hidden');
+
+            document.getElementById('starter-disable-modal').classList.remove('hidden');
+        }
+
+        function closeStarterDisableModal() {
+            document.getElementById('starter-disable-modal').classList.add('hidden');
+            targetStarterVehicleId = null;
+        }
+
+        function executeStarterDisable() {
+            if (!targetStarterVehicleId) return;
+            const v = gpsVehicles.find(x => x.id === targetStarterVehicleId);
+            if (!v) return;
+
+            const progressBox = document.getElementById('starter-progress-box');
+            const progressBar = document.getElementById('starter-progress-bar');
+            const progressLabel = document.getElementById('starter-progress-label');
+            const progressPct = document.getElementById('starter-progress-pct');
+            const btnExecute = document.getElementById('btn-execute-starter');
+
+            btnExecute.classList.add('hidden');
+            progressBox.classList.remove('hidden');
+
+            progressBar.style.width = '20%';
+            progressPct.innerText = '20%';
+            progressLabel.innerText = 'Handshaking with Onboard ECU (CAN-BUS)...';
+
+            setTimeout(() => {
+                progressBar.style.width = '65%';
+                progressPct.innerText = '65%';
+                progressLabel.innerText = 'Verifying vehicle speed < 5 km/h interlock safety...';
+            }, 800);
+
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+                progressPct.innerText = '100%';
+                progressLabel.innerText = 'STARTER RELAY INTERLOCKED! Fuel/Ignition cut engaged.';
+
+                v.immobilized = true;
+                v.speed = 0;
+                v.ignition = 'LOCKED';
+
+                // Update marker
+                if (gpsMarkers[v.id]) {
+                    gpsMarkers[v.id].setIcon(getMarkerIcon(v));
+                    gpsMarkers[v.id].setPopupContent(createGpsPopupContent(v));
+                }
+
+                renderGpsVehicleList();
+
+                setTimeout(() => {
+                    closeStarterDisableModal();
+                    showToast(`SECURITY LOCK ACTIVE: Starter relay on ${v.id} (${v.plate}) immobilized!`);
+                }, 1200);
+            }, 1800);
+        }
+
+        function restoreStarterRelay(unitId) {
+            const v = gpsVehicles.find(x => x.id === unitId);
+            if (!v) return;
+
+            v.immobilized = false;
+            v.ignition = v.status === 'moving' ? 'ON' : 'OFF';
+
+            if (gpsMarkers[v.id]) {
+                gpsMarkers[v.id].setIcon(getMarkerIcon(v));
+                gpsMarkers[v.id].setPopupContent(createGpsPopupContent(v));
+            }
+
+            renderGpsVehicleList();
+            showToast(`Starter Relay Restored for ${v.id} (${v.plate}). Vehicle can be started.`);
         }
     </script>
 </body>
