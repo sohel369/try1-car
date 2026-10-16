@@ -1286,20 +1286,69 @@
 
 
             <!-- ========================================================================= -->
-            <!-- 3. CHECK-OUT TERMINAL VIEW                                                -->
+            <!-- 3. CHECK-OUT TERMINAL VIEW (3-STEP WIZARD)                               -->
             <!-- ========================================================================= -->
             <div id="view-checkout" class="view-panel space-y-4 sm:space-y-5 hidden">
-                <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div>
                         <h2 class="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-arrow-right-from-bracket text-emerald-600"></i> Vehicle Check-Out Terminal
+                            <i class="fa-solid fa-arrow-right-from-bracket text-emerald-600"></i> Vehicle Check-Out &amp; Dispatch Terminal
                         </h2>
-                        <p class="text-xs text-slate-500">Dispatch reserved or walk-up vehicles, inspect condition, and issue keys</p>
+                        <p class="text-xs text-slate-500">Step-by-step vehicle dispatch, customer assignment, and payment settlement</p>
+                    </div>
+                    <span class="text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg border border-emerald-200 w-fit flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-signature text-emerald-600"></i> Step-by-Step Dispatch Wizard
+                    </span>
+                </div>
+
+                <!-- 3-STEP PROGRESS STEPPER BAR -->
+                <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <!-- Step 1 Pill -->
+                        <button type="button" onclick="goToCheckoutStep(1)" id="co-tab-1" class="flex items-center justify-center sm:justify-start gap-2 p-2.5 rounded-xl border-2 border-emerald-600 bg-emerald-50/80 text-emerald-950 font-bold transition">
+                            <span id="co-tab-num-1" class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-sm flex-shrink-0">1</span>
+                            <div class="hidden sm:block text-left truncate">
+                                <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-700">Step 1</span>
+                                <span class="text-xs text-slate-900 font-bold block truncate">Vehicle &amp; KM / Fuel</span>
+                            </div>
+                        </button>
+
+                        <!-- Step 2 Pill -->
+                        <button type="button" onclick="goToCheckoutStep(2)" id="co-tab-2" class="flex items-center justify-center sm:justify-start gap-2 p-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-500 font-medium transition hover:border-slate-300">
+                            <span id="co-tab-num-2" class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-xs font-black shadow-sm flex-shrink-0">2</span>
+                            <div class="hidden sm:block text-left truncate">
+                                <span class="block text-[10px] font-black uppercase tracking-wider">Step 2</span>
+                                <span class="text-xs text-slate-600 font-semibold block truncate">Customer Information</span>
+                            </div>
+                        </button>
+
+                        <!-- Step 3 Pill -->
+                        <button type="button" onclick="goToCheckoutStep(3)" id="co-tab-3" class="flex items-center justify-center sm:justify-start gap-2 p-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-500 font-medium transition hover:border-slate-300">
+                            <span id="co-tab-num-3" class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-xs font-black shadow-sm flex-shrink-0">3</span>
+                            <div class="hidden sm:block text-left truncate">
+                                <span class="block text-[10px] font-black uppercase tracking-wider">Step 3</span>
+                                <span class="text-xs text-slate-600 font-semibold block truncate">Payment &amp; Cost</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
-                <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                <!-- ═════════════════════════════════════════════════════════════════ -->
+                <!-- STEP 1: VEHICLE, KILOMETRES & FUEL LEVEL                          -->
+                <!-- ═════════════════════════════════════════════════════════════════ -->
+                <div id="co-step-1" class="co-step-panel bg-white p-4 sm:p-6 rounded-xl border border-slate-200 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 block">Step 1 of 3</span>
+                            <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-car text-emerald-600"></i> Select Vehicle &amp; Log Outgoing Telemetry
+                            </h3>
+                        </div>
+                        <span class="text-xs text-slate-400 hidden sm:inline">Dispatching Fleet Unit</span>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                        <!-- Vehicle Selection -->
                         <div class="relative">
                             <label class="block text-xs font-bold text-slate-700 mb-1">Select Agreement / Vehicle</label>
                             
@@ -1408,27 +1457,239 @@
 
                             </div>
                         </div>
+
+                        <!-- Current Kilometres / Odometer -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Current Odometer Reading</label>
-                            <input type="number" value="208616" class="w-full p-2.5 border rounded-lg text-xs font-bold font-mono">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">
+                                Outgoing Kilometres (Odometer) <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input type="number" id="co-km" value="72450" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-bold font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <span class="absolute right-3 top-2.5 text-[10px] text-slate-400 font-bold uppercase">KM</span>
+                            </div>
                         </div>
+
+                        <!-- Outgoing Fuel Tank -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Outgoing Fuel Tank</label>
-                            <select class="w-full max-w-full p-2 sm:p-2.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-800 shadow-sm truncate">
-                                <option>8/8 Full Tank</option>
-                                <option>7/8 Tank</option>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">
+                                Outgoing Fuel Tank Level <span class="text-rose-500">*</span>
+                            </label>
+                            <select id="co-fuel" class="w-full max-w-full p-2.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-slate-800 shadow-sm">
+                                <option value="8/8 (Full Tank)" selected>8/8 (Full Tank)</option>
+                                <option value="7/8 Tank">7/8 Tank</option>
+                                <option value="6/8 Tank">6/8 Tank (3/4)</option>
+                                <option value="4/8 Tank">4/8 Tank (1/2)</option>
                             </select>
                         </div>
                     </div>
 
+                    <!-- Walkaround condition notes -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Vehicle Walk-Around Inspection & Key Handover</label>
-                        <textarea rows="3" class="w-full p-3 border rounded-lg text-xs" placeholder="Walk-around inspection completed with customer. Key fob handed over. Customer acknowledged return date 09/24/2026."></textarea>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Vehicle Walk-Around Inspection &amp; Key Handover Notes</label>
+                        <textarea id="co-notes" rows="2" class="w-full p-3 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Walk-around inspection completed with customer. Clean condition, no body scratches, spare tire verified, 2 key fobs handed over."></textarea>
                     </div>
 
-                    <button onclick="showToast('Vehicle successfully checked out and keys released!')" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition shadow">
-                        Complete Check-Out & Release Vehicle
-                    </button>
+                    <!-- Step 1 Bottom Button -->
+                    <div class="flex justify-end pt-2 border-t border-slate-100">
+                        <button type="button" onclick="goToCheckoutStep(2)" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center gap-2">
+                            <span>Next: Customer Information</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ═════════════════════════════════════════════════════════════════ -->
+                <!-- STEP 2: CUSTOMER & DRIVER INFORMATION                             -->
+                <!-- ═════════════════════════════════════════════════════════════════ -->
+                <div id="co-step-2" class="co-step-panel bg-white p-4 sm:p-6 rounded-xl border border-slate-200 shadow-sm space-y-5 hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-sky-600 block">Step 2 of 3</span>
+                            <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-id-card text-sky-600"></i> Customer &amp; Driver Information
+                            </h3>
+                        </div>
+                        <button type="button" onclick="autoFillCheckoutCustomer()" class="px-3 py-1.5 bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-lg text-xs font-bold border border-sky-200 transition flex items-center gap-1.5 w-fit">
+                            <i class="fa-solid fa-wand-magic-sparkles text-sky-600"></i>
+                            <span>Auto-Fill (Patrick Johnson)</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Customer Full Name <span class="text-rose-500">*</span></label>
+                            <input type="text" id="co-cust-name" value="Patrick Johnson" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Primary Phone Number <span class="text-rose-500">*</span></label>
+                            <input type="tel" id="co-cust-phone" value="+1 (604) 555-0192" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+                            <input type="email" id="co-cust-email" value="p.johnson@email.com" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Driver's License # <span class="text-rose-500">*</span></label>
+                            <input type="text" id="co-cust-dl" value="BC-9920194-A" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">License Expiry Date</label>
+                            <input type="date" id="co-cust-dlexp" value="2028-12-31" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Date of Birth</label>
+                            <input type="date" id="co-cust-dob" value="1985-06-14" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Full Billing Address</label>
+                            <input type="text" id="co-cust-address" value="742 Evergreen Terrace, Toronto ON M3J 2N8" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Additional Authorized Driver</label>
+                            <input type="text" id="co-cust-add-driver" placeholder="None / Additional Driver Name" class="w-full p-2.5 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Step 2 Navigation Buttons -->
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                        <button type="button" onclick="goToCheckoutStep(1)" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition border border-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Back: Vehicle &amp; KM</span>
+                        </button>
+                        <button type="button" onclick="goToCheckoutStep(3)" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center gap-2">
+                            <span>Next: Payment &amp; Cost</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ═════════════════════════════════════════════════════════════════ -->
+                <!-- STEP 3: PAYMENT, COST BREAKDOWN & COMPLETE DISPATCH               -->
+                <!-- ═════════════════════════════════════════════════════════════════ -->
+                <div id="co-step-3" class="co-step-panel bg-white p-4 sm:p-6 rounded-xl border border-slate-200 shadow-sm space-y-5 hidden">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 block">Step 3 of 3</span>
+                            <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-invoice-dollar text-emerald-600"></i> Rental Cost, Deposit &amp; Payment Settlement
+                            </h3>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">Final Step</span>
+                    </div>
+
+                    <!-- Dispatch Summary Bar -->
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                        <div>
+                            <span class="text-slate-400 text-[10px] block uppercase font-bold">Assigned Vehicle</span>
+                            <span id="co-sum-vehicle" class="font-extrabold text-slate-900 block truncate">2020 Toyota Corolla (COR 01)</span>
+                            <span id="co-sum-rate-sub" class="text-[10px] text-slate-500 font-mono">Rate: $26.99 / day</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 text-[10px] block uppercase font-bold">Renter / Driver</span>
+                            <span id="co-sum-renter" class="font-extrabold text-slate-900 block truncate">Patrick Johnson</span>
+                            <span id="co-sum-dl-sub" class="text-[10px] text-slate-500 font-mono">DL: BC-9920194-A</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 text-[10px] block uppercase font-bold">Outgoing Telemetry</span>
+                            <span id="co-sum-telemetry" class="font-extrabold text-slate-900 block truncate font-mono">72,450 km &bull; 8/8 Full</span>
+                            <span class="text-[10px] text-emerald-600 font-bold">Verified &bull; Keys Prepped</span>
+                        </div>
+                    </div>
+
+                    <!-- Rental Period Dates -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3.5 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="block text-slate-500 font-bold text-[10px] mb-1">Pick-up Date (Check-Out)</label>
+                            <input type="date" id="co-date-start" value="2026-09-17" onchange="calcCheckoutTotals()" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900">
+                        </div>
+                        <div>
+                            <label class="block text-slate-500 font-bold text-[10px] mb-1">Scheduled Return Date</label>
+                            <input type="date" id="co-date-end" value="2026-09-24" onchange="calcCheckoutTotals()" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900">
+                        </div>
+                        <div>
+                            <label class="block text-slate-500 font-bold text-[10px] mb-1">Calculated Rental Period</label>
+                            <div class="p-2 bg-sky-50 border border-sky-200 rounded-lg font-black text-sky-800 text-xs flex items-center justify-between">
+                                <span id="co-days-disp">7 Days</span>
+                                <span class="text-[10px] text-sky-600 font-normal">Daily Basis</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charges & Payment Settlement Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <!-- Cost Itemization -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <span class="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1.5 flex items-center justify-between">
+                                <span>Itemized Rental Charges</span>
+                                <span class="text-[10px] text-slate-400 font-normal">CAD ($)</span>
+                            </span>
+                            <div class="flex justify-between text-slate-600 pt-1">
+                                <span>Daily Base Rate (<span id="co-calc-days">7</span> Days @ <span id="co-calc-rate">$26.99</span>)</span>
+                                <span class="font-mono font-bold text-slate-900" id="co-calc-base">$188.93</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Collision Damage Waiver (CDW @ $10.00/day)</span>
+                                <span class="font-mono font-bold text-slate-900" id="co-calc-cdw">$70.00</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Fuel Prep / GPS Service Fee</span>
+                                <span class="font-mono font-bold text-slate-900">$3.50</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600 border-b border-slate-200 pb-1.5">
+                                <span>Harmonized Sales Tax (HST 13%)</span>
+                                <span class="font-mono font-bold text-slate-900" id="co-calc-tax">$34.12</span>
+                            </div>
+                            <div class="flex justify-between text-slate-900 font-black text-xs pt-0.5">
+                                <span>Total Rental Charges:</span>
+                                <span class="font-mono text-sky-700 font-black text-sm" id="co-calc-total">$296.55</span>
+                            </div>
+                            <div class="flex justify-between text-amber-900 bg-amber-100/70 p-2 rounded-lg font-bold text-[11px] border border-amber-200 mt-2">
+                                <span>Pre-Authorized Security Deposit (Refundable):</span>
+                                <span class="font-mono font-black" id="co-calc-dep">$420.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Collection Form -->
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-3 text-xs">
+                            <span class="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1.5">
+                                Payment Method &amp; Counter Authorization
+                            </span>
+                            <div>
+                                <label class="block text-slate-500 font-bold text-[10px] mb-1">Payment Method</label>
+                                <select id="co-payment-method" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg font-semibold text-slate-800">
+                                    <option value="cc" selected>Credit Card (Pre-Auth Deposit $420 + Rental Charge)</option>
+                                    <option value="debit">Interac Debit</option>
+                                    <option value="cash">Cash ($420.00 Deposit Held 22 Business Days)</option>
+                                    <option value="direct">Insurance / Dealership Direct Bill (ICBC Replacement)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-slate-500 font-bold text-[10px] mb-1">Card / Transaction Reference</label>
+                                <input type="text" id="co-payment-ref" value="VISA-4091 (AUTH# 098412)" class="w-full p-2 border border-slate-300 rounded-lg font-mono font-bold text-slate-800">
+                            </div>
+                            <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-start gap-2">
+                                <input type="checkbox" id="co-terms-checkbox" checked class="mt-0.5 w-4 h-4 text-emerald-600 rounded">
+                                <label for="co-terms-checkbox" class="text-[11px] text-emerald-950 font-medium leading-tight cursor-pointer">
+                                    Customer signed &amp; acknowledged rental policies: 407 ETR toll admin fee ($60), refuel charge ($3.50/L), and smoke-free vehicle terms.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 Navigation & Complete Dispatch -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                        <button type="button" onclick="goToCheckoutStep(2)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition border border-slate-300 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Back: Customer Information</span>
+                        </button>
+                        <button type="button" onclick="completeCheckoutProcedure()" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-check text-sm"></i>
+                            <span>Complete Check-Out &amp; Release Vehicle</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -3433,6 +3694,8 @@
             }
         }
 
+        let currentCheckoutRate = 26.99;
+
         function selectCustomVehicle(type, title, sub, odo) {
             const titleEl = document.getElementById(`${type}-selected-title`);
             const subEl = document.getElementById(`${type}-selected-sub`);
@@ -3443,6 +3706,25 @@
             if (subEl) subEl.innerText = sub;
             if (menu) menu.classList.add("hidden");
             if (arrow) arrow.classList.remove("rotate-180");
+
+            if (type === 'checkout') {
+                const kmInput = document.getElementById('co-km');
+                if (kmInput && odo) kmInput.value = odo;
+
+                const sumVeh = document.getElementById('co-sum-vehicle');
+                if (sumVeh) sumVeh.innerText = title;
+
+                // Extract rate e.g. $49.99/day or $26.99/day
+                if (sub && sub.includes('$')) {
+                    const match = sub.match(/\$([0-9.]+)/);
+                    if (match && match[1]) {
+                        currentCheckoutRate = parseFloat(match[1]);
+                        const rateSub = document.getElementById('co-sum-rate-sub');
+                        if (rateSub) rateSub.innerText = `Rate: $${currentCheckoutRate.toFixed(2)} / day`;
+                        calcCheckoutTotals();
+                    }
+                }
+            }
             
             showToast(`Selected: ${title}`);
         }
@@ -4242,6 +4524,171 @@
 
             renderGpsVehicleList();
             showToast(`Starter Relay Restored for ${v.id} (${v.plate}). Vehicle can be started.`);
+        }
+
+        // =========================================================================
+        // CHECK-OUT 3-STEP WIZARD CONTROLLER
+        // =========================================================================
+        let currentCheckoutStep = 1;
+
+        function goToCheckoutStep(step) {
+            if (step < 1 || step > 3) return;
+
+            // Simple validation on Step 1 -> 2
+            if (step === 2 && currentCheckoutStep === 1) {
+                const km = document.getElementById('co-km').value;
+                if (!km || km <= 0) {
+                    showToast('Please enter a valid outgoing odometer reading.');
+                    document.getElementById('co-km').focus();
+                    return;
+                }
+            }
+
+            // Simple validation on Step 2 -> 3
+            if (step === 3 && currentCheckoutStep === 2) {
+                const name = document.getElementById('co-cust-name').value.trim();
+                const dl = document.getElementById('co-cust-dl').value.trim();
+                if (!name) {
+                    showToast('Please enter the customer full name.');
+                    document.getElementById('co-cust-name').focus();
+                    return;
+                }
+                if (!dl) {
+                    showToast('Please enter the driver license number.');
+                    document.getElementById('co-cust-dl').focus();
+                    return;
+                }
+            }
+
+            currentCheckoutStep = step;
+
+            // Hide all step panels
+            document.querySelectorAll('.co-step-panel').forEach(panel => {
+                panel.classList.add('hidden');
+            });
+
+            // Show selected step panel
+            const activePanel = document.getElementById(`co-step-${step}`);
+            if (activePanel) {
+                activePanel.classList.remove('hidden');
+            }
+
+            // Update top progress stepper pills
+            for (let i = 1; i <= 3; i++) {
+                const tab = document.getElementById(`co-tab-${i}`);
+                const tabNum = document.getElementById(`co-tab-num-${i}`);
+                if (!tab || !tabNum) continue;
+
+                if (i === step) {
+                    tab.className = "flex items-center justify-center sm:justify-start gap-2 p-2.5 rounded-xl border-2 border-emerald-600 bg-emerald-50/80 text-emerald-950 font-bold transition";
+                    tabNum.className = "w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-sm flex-shrink-0";
+                    tabNum.innerText = i;
+                } else if (i < step) {
+                    // Completed step
+                    tab.className = "flex items-center justify-center sm:justify-start gap-2 p-2.5 rounded-xl border-2 border-emerald-400 bg-emerald-50/40 text-emerald-900 font-semibold transition hover:border-emerald-500";
+                    tabNum.className = "w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shadow-sm flex-shrink-0";
+                    tabNum.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i>';
+                } else {
+                    // Future step
+                    tab.className = "flex items-center justify-center sm:justify-start gap-2 p-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-500 font-medium transition hover:border-slate-300";
+                    tabNum.className = "w-6 h-6 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-xs font-black shadow-sm flex-shrink-0";
+                    tabNum.innerText = i;
+                }
+            }
+
+            // Sync step 3 summaries if entering step 3
+            if (step === 3) {
+                syncCheckoutStep3Data();
+                calcCheckoutTotals();
+            }
+
+            // Scroll to view-checkout top smoothly
+            const checkoutView = document.getElementById('view-checkout');
+            if (checkoutView) {
+                checkoutView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function syncCheckoutStep3Data() {
+            const titleEl = document.getElementById('checkout-selected-title');
+            const kmEl = document.getElementById('co-km');
+            const fuelEl = document.getElementById('co-fuel');
+            const custNameEl = document.getElementById('co-cust-name');
+            const custDlEl = document.getElementById('co-cust-dl');
+
+            const sumVeh = document.getElementById('co-sum-vehicle');
+            const sumRenter = document.getElementById('co-sum-renter');
+            const sumTelemetry = document.getElementById('co-sum-telemetry');
+            const sumDl = document.getElementById('co-sum-dl-sub');
+
+            if (sumVeh && titleEl) sumVeh.innerText = titleEl.innerText;
+            if (sumRenter && custNameEl) sumRenter.innerText = custNameEl.value || 'Patrick Johnson';
+            if (sumDl && custDlEl) sumDl.innerText = `DL: ${custDlEl.value || 'BC-9920194-A'}`;
+            if (sumTelemetry && kmEl && fuelEl) {
+                sumTelemetry.innerText = `${kmEl.value} km • ${fuelEl.value}`;
+            }
+        }
+
+        function autoFillCheckoutCustomer() {
+            document.getElementById('co-cust-name').value = 'Patrick Johnson';
+            document.getElementById('co-cust-phone').value = '+1 (604) 555-0192';
+            document.getElementById('co-cust-email').value = 'p.johnson@email.com';
+            document.getElementById('co-cust-dl').value = 'BC-9920194-A';
+            document.getElementById('co-cust-dlexp').value = '2028-12-31';
+            document.getElementById('co-cust-dob').value = '1985-06-14';
+            document.getElementById('co-cust-address').value = '742 Evergreen Terrace, Toronto ON M3J 2N8';
+            showToast('Customer information auto-filled: Patrick Johnson');
+        }
+
+        function calcCheckoutTotals() {
+            const startInput = document.getElementById('co-date-start');
+            const endInput = document.getElementById('co-date-end');
+            
+            let days = 7;
+            if (startInput && endInput && startInput.value && endInput.value) {
+                const d1 = new Date(startInput.value);
+                const d2 = new Date(endInput.value);
+                const diffTime = d2 - d1;
+                const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+                days = Math.max(1, diffDays || 1);
+            }
+
+            const daysDisp = document.getElementById('co-days-disp');
+            const calcDays = document.getElementById('co-calc-days');
+            const calcRate = document.getElementById('co-calc-rate');
+            const calcBase = document.getElementById('co-calc-base');
+            const calcCdw = document.getElementById('co-calc-cdw');
+            const calcTax = document.getElementById('co-calc-tax');
+            const calcTotal = document.getElementById('co-calc-total');
+
+            const rate = currentCheckoutRate || 26.99;
+            const base = days * rate;
+            const cdw = days * 10.00;
+            const fee = 3.50;
+            const subtotal = base + cdw + fee;
+            const tax = subtotal * 0.13;
+            const total = subtotal + tax;
+
+            if (daysDisp) daysDisp.innerText = `${days} Days`;
+            if (calcDays) calcDays.innerText = days;
+            if (calcRate) calcRate.innerText = `$${rate.toFixed(2)}`;
+            if (calcBase) calcBase.innerText = `$${base.toFixed(2)}`;
+            if (calcCdw) calcCdw.innerText = `$${cdw.toFixed(2)}`;
+            if (calcTax) calcTax.innerText = `$${tax.toFixed(2)}`;
+            if (calcTotal) calcTotal.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function completeCheckoutProcedure() {
+            const veh = document.getElementById('co-sum-vehicle')?.innerText || '2020 Toyota Corolla';
+            const renter = document.getElementById('co-cust-name')?.value || 'Patrick Johnson';
+
+            showToast(`Vehicle Check-Out Complete! ${veh} released to ${renter}. Keys handed over!`);
+
+            setTimeout(() => {
+                switchView('counter');
+                switchContractSubTab('summary');
+                showToast(`Viewing active Agreement RA #3195 for ${renter}`);
+            }, 1000);
         }
     </script>
 </body>
