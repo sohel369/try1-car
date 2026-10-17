@@ -328,7 +328,7 @@
                 <div id="sub-counter" class="space-y-0.5 pl-3 pt-1">
                     <button onclick="switchView('counter', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/60 hover:text-white transition sidebar-item-active">
                         <i class="fa-solid fa-file-signature text-sky-400 w-4"></i>
-                        <span>Contract (RA #3195)</span>
+                        <span id="sidebar-ra-badge">Contract (RA #3195)</span>
                         <span class="ml-auto bg-amber-500/20 text-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">Active</span>
                     </button>
                     <button onclick="switchView('checkout', this)" class="sidebar-btn w-full flex items-center space-x-2.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/60 hover:text-white transition">
@@ -702,7 +702,7 @@
                         <div class="space-y-2 text-xs">
                             <div class="p-2.5 bg-slate-50 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-slate-100">
                                 <div>
-                                    <span class="font-bold text-slate-800">RA #3195 - Patrick Johnson</span>
+                                    <span id="quick-card-ra" class="font-bold text-slate-800">RA #3195 - Patrick Johnson</span>
                                     <span class="block text-slate-500 text-[11px]">COR 01 (Toyota Corolla) &bull; WestEnd</span>
                                 </div>
                                 <button onclick="switchView('counter')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold rounded text-[11px] w-fit">View Contract</button>
@@ -729,7 +729,7 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
                             <button onclick="switchView('counter')" class="p-3 bg-sky-600/90 hover:bg-sky-500 text-white text-xs font-black rounded-xl transition shadow flex items-center justify-center gap-2 border border-sky-400/30 group">
                                 <i class="fa-solid fa-file-signature text-sky-200 group-hover:scale-110 transition-transform"></i>
-                                <span>Counter (RA #3195)</span>
+                                <span id="quick-counter-ra">Counter (RA #3195)</span>
                             </button>
                             <button onclick="switchView('checkout')" class="p-3 bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs font-black rounded-xl transition shadow flex items-center justify-center gap-2 border border-emerald-400/30 group">
                                 <i class="fa-solid fa-arrow-right-from-bracket text-emerald-200 group-hover:scale-110 transition-transform"></i>
@@ -767,14 +767,14 @@
                                     <i class="fa-solid fa-circle-check text-[9px] mr-1"></i> ACTIVE CONTRACT
                                 </span>
                             </div>
-                            <p class="text-[11px] sm:text-xs text-slate-500">Contract Agreement #3195 &bull; Walk-Up Customer &bull; TRY-1 CAR RENTALS</p>
+                            <p id="counter-contract-sub" class="text-[11px] sm:text-xs text-slate-500">Contract Agreement #3195 &bull; Walk-Up Customer &bull; TRY-1 CAR RENTALS</p>
                         </div>
                     </div>
 
                     <div class="flex items-center space-x-2 no-print flex-wrap gap-y-2">
                         <button onclick="openPrintAgreementModal()" class="px-3 py-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
                             <i class="fa-solid fa-print text-slate-500"></i>
-                            <span>Print RA #3195</span>
+                            <span id="counter-print-btn-text">Print RA #3195</span>
                         </button>
                         <button onclick="showToast('Contract RA #3195 successfully saved to database!')" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
                             <i class="fa-solid fa-floppy-disk"></i>
@@ -791,7 +791,7 @@
                     </div>
                     <div class="border-r border-slate-100 pr-1 sm:pr-2">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">RA # (Agreement)</span>
-                        <input type="text" value="3195" class="text-xs font-black text-sky-700 bg-transparent border-none p-0 focus:ring-0 w-full">
+                        <input type="text" id="header-ra-number" value="3195" class="text-xs font-black text-sky-700 bg-transparent border-none p-0 focus:ring-0 w-full">
                     </div>
                     <div class="border-r border-slate-100 pr-1 sm:pr-2">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Ref #</span>
@@ -1301,6 +1301,25 @@
                     </span>
                 </div>
 
+                <!-- Active Outgoing Agreement RA Banner -->
+                <div class="flex items-center justify-between bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white p-3 sm:p-3.5 px-4 rounded-xl shadow-md text-xs border border-sky-800/60">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </span>
+                        <div>
+                            <span class="text-slate-400 text-[10px] block font-bold uppercase tracking-wider">Current Outgoing Agreement</span>
+                            <span class="font-black text-white text-base tracking-wide" id="co-header-ra-display">RA #3195</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 font-bold text-[10px] rounded-lg border border-emerald-500/30 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>Auto-Roll Over Enabled</span>
+                        </span>
+                    </div>
+                </div>
+
                 <!-- 3-STEP PROGRESS STEPPER BAR -->
                 <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="grid grid-cols-3 gap-2 text-xs">
@@ -1367,12 +1386,12 @@
                             <!-- Constrained Responsive Dropdown Menu -->
                             <div id="checkout-vehicle-menu" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-xl shadow-2xl border border-slate-200 max-h-60 overflow-y-auto z-50 divide-y divide-slate-100 custom-scrollbar text-xs w-full">
                                 
-                                <div onclick="selectCustomVehicle('checkout', '2020 Toyota Corolla (COR 01)', 'RA #3195 • Patrick Johnson • $26.99/day', '208616') " class="p-2.5 hover:bg-sky-50 cursor-pointer transition flex items-center justify-between gap-2 bg-sky-50/60">
+                                <div id="co-veh-item-corolla" onclick="selectCustomVehicle('checkout', '2020 Toyota Corolla (COR 01)', 'RA #3195 • Patrick Johnson • $26.99/day', '208616') " class="p-2.5 hover:bg-sky-50 cursor-pointer transition flex items-center justify-between gap-2 bg-sky-50/60">
                                     <div class="truncate">
                                         <span class="font-bold text-slate-900 block truncate">2020 Toyota Corolla (COR 01)</span>
                                         <span class="text-[10px] text-slate-500 block truncate">RA #3195 &bull; Patrick Johnson &bull; Medium Sedan</span>
                                     </div>
-                                    <span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded-full flex-shrink-0">Active RA</span>
+                                    <span class="co-veh-badge px-2 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded-full flex-shrink-0">Active RA</span>
                                 </div>
 
                                 <div onclick="selectCustomVehicle('checkout', '2019 Nissan Rogue (ROG 01)', 'Plate: ON-ROG91 • SUV • $49.99/day', '72450') " class="p-2.5 hover:bg-sky-50 cursor-pointer transition flex items-center justify-between gap-2">
@@ -1599,22 +1618,70 @@
                         </div>
                     </div>
 
-                    <!-- Rental Period Dates -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3.5 rounded-xl border border-slate-200">
-                        <div>
-                            <label class="block text-slate-500 font-bold text-[10px] mb-1">Pick-up Date (Check-Out)</label>
-                            <input type="date" id="co-date-start" value="2026-09-17" onchange="calcCheckoutTotals()" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900">
-                        </div>
-                        <div>
-                            <label class="block text-slate-500 font-bold text-[10px] mb-1">Scheduled Return Date</label>
-                            <input type="date" id="co-date-end" value="2026-09-24" onchange="calcCheckoutTotals()" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900">
-                        </div>
-                        <div>
-                            <label class="block text-slate-500 font-bold text-[10px] mb-1">Calculated Rental Period</label>
-                            <div class="p-2 bg-sky-50 border border-sky-200 rounded-lg font-black text-sky-800 text-xs flex items-center justify-between">
-                                <span id="co-days-disp">7 Days</span>
-                                <span class="text-[10px] text-sky-600 font-normal">Daily Basis</span>
+                    <!-- Rental Period Dates & Live Daily Synchronizer -->
+                    <div class="bg-white p-4 rounded-xl border-2 border-sky-200/80 shadow-sm space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+                            <div>
+                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-calendar-days text-sky-600"></i> Rental Duration &amp; Calendar Synchronizer
+                                </span>
+                                <p class="text-[10px] text-slate-500">Entering rental days automatically synchronizes return date, and calendar selection updates day count</p>
                             </div>
+                            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold text-[10px] rounded-lg border border-emerald-200 flex items-center gap-1.5 w-fit">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span>Two-Way Live Sync Active</span>
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                            <!-- 1. Direct Days Input with +/- buttons -->
+                            <div class="bg-sky-50/60 p-2.5 rounded-xl border border-sky-200">
+                                <label class="block text-sky-900 font-black text-[10px] uppercase mb-1.5 flex items-center justify-between">
+                                    <span>Rental Duration (Days)</span>
+                                    <span class="text-[9px] text-sky-600 font-bold">1 Day = Daily Rate</span>
+                                </label>
+                                <div class="flex items-center gap-1.5">
+                                    <button type="button" onclick="adjustCheckoutDays(-1)" class="w-8 h-8 rounded-lg bg-white hover:bg-sky-100 text-sky-800 border border-sky-300 font-black flex items-center justify-center text-sm shadow-sm transition active:scale-95">&minus;</button>
+                                    <input type="number" id="co-rental-days" value="1" min="1" max="365" oninput="onCheckoutDaysInput()" class="flex-1 p-1.5 text-center font-black text-slate-900 text-sm border-2 border-sky-400 rounded-lg bg-white shadow-inner focus:ring-2 focus:ring-sky-500 font-mono">
+                                    <button type="button" onclick="adjustCheckoutDays(1)" class="w-8 h-8 rounded-lg bg-white hover:bg-sky-100 text-sky-800 border border-sky-300 font-black flex items-center justify-center text-sm shadow-sm transition active:scale-95">&plus;</button>
+                                </div>
+                            </div>
+
+                            <!-- 2. Pick-up Date -->
+                            <div>
+                                <label class="block text-slate-600 font-bold text-[10px] uppercase mb-1.5 flex items-center gap-1">
+                                    <i class="fa-solid fa-plane-departure text-slate-400"></i> Pick-up Date (Start)
+                                </label>
+                                <input type="date" id="co-date-start" value="2026-09-17" onchange="onCheckoutCalendarChanged('start')" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900 text-xs focus:ring-2 focus:ring-sky-500">
+                            </div>
+
+                            <!-- 3. Scheduled Return Date (Synchronized) -->
+                            <div>
+                                <label class="block text-slate-600 font-bold text-[10px] uppercase mb-1.5 flex items-center gap-1">
+                                    <i class="fa-solid fa-plane-arrival text-slate-400"></i> Scheduled Return (Sync)
+                                </label>
+                                <input type="date" id="co-date-end" value="2026-09-18" onchange="onCheckoutCalendarChanged('end')" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-slate-900 text-xs focus:ring-2 focus:ring-sky-500">
+                            </div>
+
+                            <!-- 4. Calculated Period Badge -->
+                            <div>
+                                <label class="block text-slate-600 font-bold text-[10px] uppercase mb-1.5">Calculated Period</label>
+                                <div class="p-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-lg shadow-sm flex items-center justify-between min-h-[38px]">
+                                    <span id="co-days-disp" class="font-black text-sm tracking-wide">1 Day</span>
+                                    <span class="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 bg-white/20 rounded">Daily Basis</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Preset Duration Buttons -->
+                        <div class="flex items-center gap-1.5 flex-wrap pt-1 text-[11px]">
+                            <span class="text-slate-400 font-bold text-[10px] mr-1">Quick Presets:</span>
+                            <button type="button" onclick="setCheckoutDays(1)" class="co-day-preset px-2.5 py-1 bg-sky-600 text-white font-bold rounded-lg shadow-sm transition hover:bg-sky-500 active:scale-95" id="preset-day-1">1 Day</button>
+                            <button type="button" onclick="setCheckoutDays(2)" class="co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95" id="preset-day-2">2 Days</button>
+                            <button type="button" onclick="setCheckoutDays(3)" class="co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95" id="preset-day-3">3 Days</button>
+                            <button type="button" onclick="setCheckoutDays(7)" class="co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95" id="preset-day-7">7 Days (1 Wk)</button>
+                            <button type="button" onclick="setCheckoutDays(14)" class="co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95" id="preset-day-14">14 Days</button>
+                            <button type="button" onclick="setCheckoutDays(30)" class="co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95" id="preset-day-30">30 Days (1 Mo)</button>
                         </div>
                     </div>
 
@@ -1627,12 +1694,12 @@
                                 <span class="text-[10px] text-slate-400 font-normal">CAD ($)</span>
                             </span>
                             <div class="flex justify-between text-slate-600 pt-1">
-                                <span>Daily Base Rate (<span id="co-calc-days">7</span> Days @ <span id="co-calc-rate">$26.99</span>)</span>
-                                <span class="font-mono font-bold text-slate-900" id="co-calc-base">$188.93</span>
+                                <span>Daily Base Rate (<span id="co-calc-days">1</span> Day @ <span id="co-calc-rate">$26.99</span>)</span>
+                                <span class="font-mono font-bold text-slate-900" id="co-calc-base">$26.99</span>
                             </div>
                             <div class="flex justify-between text-slate-600">
                                 <span>Collision Damage Waiver (CDW @ $10.00/day)</span>
-                                <span class="font-mono font-bold text-slate-900" id="co-calc-cdw">$70.00</span>
+                                <span class="font-mono font-bold text-slate-900" id="co-calc-cdw">$10.00</span>
                             </div>
                             <div class="flex justify-between text-slate-600">
                                 <span>Fuel Prep / GPS Service Fee</span>
@@ -1640,11 +1707,11 @@
                             </div>
                             <div class="flex justify-between text-slate-600 border-b border-slate-200 pb-1.5">
                                 <span>Harmonized Sales Tax (HST 13%)</span>
-                                <span class="font-mono font-bold text-slate-900" id="co-calc-tax">$34.12</span>
+                                <span class="font-mono font-bold text-slate-900" id="co-calc-tax">$5.26</span>
                             </div>
                             <div class="flex justify-between text-slate-900 font-black text-xs pt-0.5">
                                 <span>Total Rental Charges:</span>
-                                <span class="font-mono text-sky-700 font-black text-sm" id="co-calc-total">$296.55</span>
+                                <span class="font-mono text-sky-700 font-black text-sm" id="co-calc-total">$45.75</span>
                             </div>
                             <div class="flex justify-between text-amber-900 bg-amber-100/70 p-2 rounded-lg font-bold text-[11px] border border-amber-200 mt-2">
                                 <span>Pre-Authorized Security Deposit (Refundable):</span>
@@ -1681,14 +1748,20 @@
 
                     <!-- Step 3 Navigation & Complete Dispatch -->
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100">
-                        <button type="button" onclick="goToCheckoutStep(2)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition border border-slate-300 flex items-center justify-center gap-1.5">
+                        <button type="button" onclick="goToCheckoutStep(2)" class="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition border border-slate-300 flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-arrow-left"></i>
                             <span>Back: Customer Information</span>
                         </button>
-                        <button type="button" onclick="completeCheckoutProcedure()" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-circle-check text-sm"></i>
-                            <span>Complete Check-Out &amp; Release Vehicle</span>
-                        </button>
+                        <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                            <button type="button" onclick="completeCheckoutProcedure(false)" class="w-full sm:w-auto px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Complete Check-Out</span>
+                            </button>
+                            <button type="button" onclick="completeCheckoutProcedure(true)" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-print"></i>
+                                <span>Complete &amp; Print Agreement (Roll Over RA)</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3015,15 +3088,15 @@
                 <div class="flex items-center gap-2">
                     <span class="w-7 h-7 rounded-lg bg-sky-600/30 text-sky-400 flex items-center justify-center text-xs"><i class="fa-solid fa-print"></i></span>
                     <div>
-                        <h4 class="font-bold text-xs sm:text-sm text-white">Print Agreement (RA #3195)</h4>
+                        <h4 id="print-modal-title" class="font-bold text-xs sm:text-sm text-white">Print Agreement (RA #3195)</h4>
                         <p class="text-[10px] text-slate-400 hidden sm:block">Full Page Rental Contract &amp; Terms Addendum</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-1.5 sm:space-x-2 ml-auto">
-                    <button onclick="window.print()" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition">
-                        <i class="fa-solid fa-print text-[11px]"></i> <span>Print / Save PDF</span>
+                    <button type="button" onclick="triggerPrintAndRollOver()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition">
+                        <i class="fa-solid fa-print text-[11px]"></i> <span>Print &amp; Roll Over to Next RA</span>
                     </button>
-                    <button onclick="closePrintModal()" class="text-slate-400 hover:text-white text-xl px-2 py-0.5 rounded-lg hover:bg-slate-800 transition leading-none">&times;</button>
+                    <button type="button" onclick="closePrintModal(true)" class="text-slate-400 hover:text-white text-xl px-2 py-0.5 rounded-lg hover:bg-slate-800 transition leading-none">&times;</button>
                 </div>
             </div>
 
@@ -3044,7 +3117,7 @@
                   </div>
                   <div style="text-align:right;">
                     <div style="font-size:9px;color:#888;margin-bottom:2px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">RA</div>
-                    <div style="font-size:22px;font-weight:900;color:#0369a1;letter-spacing:2px;line-height:1;">3195</div>
+                    <div id="print-ra-number" style="font-size:22px;font-weight:900;color:#0369a1;letter-spacing:2px;line-height:1;">3195</div>
                     <div style="font-size:9px;font-weight:700;border:1.5px solid #111;padding:2px 8px;display:inline-block;margin-top:4px;letter-spacing:0.5px;">RENTAL AGREEMENT PAGE 1</div>
                   </div>
                 </div>
@@ -3054,7 +3127,7 @@
                   <tr>
                     <td style="border:1px solid #bbb;padding:2px 3px;width:24%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Customer Name</div>
-                      <div style="font-weight:900;font-size:11px;">JOHNSON, PATRICK</div>
+                      <div id="print-cust-name" style="font-weight:900;font-size:11px;">JOHNSON, PATRICK</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;width:14%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Province</div>
@@ -3062,11 +3135,11 @@
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;width:12%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Vehicle #</div>
-                      <div style="font-weight:900;color:#0369a1;">COR 01</div>
+                      <div id="print-veh-unit" style="font-weight:900;color:#0369a1;">COR 01</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;width:12%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Plate #</div>
-                      <div style="font-weight:700;font-family:monospace;">BC-8821</div>
+                      <div id="print-veh-plate" style="font-weight:700;font-family:monospace;">BC-8821</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;width:10%;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Done By</div>
@@ -3088,11 +3161,11 @@
                     </td>
                     <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Make / Model</div>
-                      <div style="font-weight:700;">Toyota Corolla 2024</div>
+                      <div id="print-veh-model" style="font-weight:700;">Toyota Corolla 2024</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Date Out</div>
-                      <div style="font-weight:900;">09/17/26</div>
+                      <div id="print-date-out" style="font-weight:900;">09/17/26</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Time Out</div>
@@ -3114,11 +3187,11 @@
                     </td>
                     <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Driver's License #</div>
-                      <div style="font-weight:900;font-family:monospace;letter-spacing:1px;">BC-9920194-A</div>
+                      <div id="print-cust-dl" style="font-weight:900;font-family:monospace;letter-spacing:1px;">BC-9920194-A</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Date Due</div>
-                      <div style="font-weight:900;">09/24/26</div>
+                      <div id="print-date-due" style="font-weight:900;">09/18/26</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Time Due</div>
@@ -3136,11 +3209,11 @@
                     </td>
                     <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Phone Number</div>
-                      <div style="font-weight:700;">+1 (604) 555-0192</div>
+                      <div id="print-cust-phone" style="font-weight:700;">+1 (604) 555-0192</div>
                     </td>
                     <td colspan="2" style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Odometer Out</div>
-                      <div style="font-weight:900;font-family:monospace;">208,616</div>
+                      <div id="print-odo-out" style="font-weight:900;font-family:monospace;">208,616</div>
                     </td>
                     <td style="border:1px solid #bbb;padding:2px 3px;">
                       <div style="font-size:7.5px;color:#888;font-weight:700;text-transform:uppercase;margin-bottom:1px;">Odo In</div>
@@ -3234,12 +3307,12 @@
                       </thead>
                       <tbody>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">MILES @ $0.10</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
-                        <tr style="background:#eff6ff;"><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">DAYS @ $26.99 (x 7 Days)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;font-weight:700;text-align:right;">$188.93</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">CDW @ $10.00/day (x 7 Days)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$70.00</td></tr>
+                        <tr style="background:#eff6ff;"><td id="print-cell-base-label" style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">DAYS @ $26.99 (x 1 Day)</td><td id="print-cell-base-amt" style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;font-weight:700;text-align:right;">$26.99</td></tr>
+                        <tr><td id="print-cell-cdw-label" style="border:1px solid #bbb;padding:1px 3px;">CDW @ $10.00/day (x 1 Day)</td><td id="print-cell-cdw-amt" style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$10.00</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">GPS FEE</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">FUEL</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$3.50</td></tr>
-                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">HST (13%)</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$27.71</td></tr>
-                        <tr style="background:#f0fdf4;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;">TOTAL CHARGES (7 Days)</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;color:#0369a1;">$262.43</td></tr>
+                        <tr><td style="border:1px solid #bbb;padding:1px 3px;">HST (13%)</td><td id="print-cell-tax-amt" style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$5.26</td></tr>
+                        <tr style="background:#f0fdf4;"><td id="print-cell-total-label" style="border:1.5px solid #444;padding:2px 3px;font-weight:900;">TOTAL CHARGES (1 Day)</td><td id="print-cell-total-amt" style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;color:#0369a1;">$45.75</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;">LESS DEPOSITS</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;color:#dc2626;">$420.00</td></tr>
                         <tr><td style="border:1px solid #bbb;padding:1px 3px;font-weight:700;">NET DUE MEMBER</td><td style="border:1px solid #bbb;padding:1px 3px;font-family:monospace;text-align:right;">$0.00</td></tr>
                         <tr style="background:#fffbeb;"><td style="border:1.5px solid #444;padding:2px 3px;font-weight:900;text-transform:uppercase;">Amount Due</td><td style="border:1.5px solid #444;padding:2px 3px;font-family:monospace;font-weight:900;text-align:right;font-size:11px;">$0.00</td></tr>
@@ -3339,7 +3412,7 @@
                 <!-- FOOTER -->
                 <div style="border-top:1px solid #555;padding-top:3px;margin-top:3px;display:flex;justify-content:space-between;align-items:center;font-size:7.5px;color:#777;">
                   <span>TRY-1 CAR RENTALS &bull; West End Location &bull; 4501 Keele Street Unit 60, Toronto, ON M3J4A4 &bull; Tel: (416) 840-0508</span>
-                  <span style="font-family:monospace;font-weight:700;color:#0369a1;">RA #3195 &bull; Printed: Sept 21, 2026 &bull; Agent: CS-04</span>
+                  <span id="print-footer-ra" style="font-family:monospace;font-weight:700;color:#0369a1;">RA #3195 &bull; Printed: Sept 21, 2026 &bull; Agent: CS-04</span>
                 </div>
 
               </div>
@@ -3673,12 +3746,21 @@
             showToast('Expense successfully recorded into Accounting Ledger!');
         }
 
+        let currentRaNumber = 3195;
+        let checkoutJustCompleted = false;
+
         function openPrintAgreementModal() {
             document.getElementById('print-modal').classList.remove('hidden');
         }
 
-        function closePrintModal() {
+        function closePrintModal(wasUserClosed = false) {
             document.getElementById('print-modal').classList.add('hidden');
+            if (wasUserClosed && checkoutJustCompleted) {
+                const completedRa = currentRaNumber;
+                const veh = document.getElementById('co-sum-vehicle')?.innerText || '2020 Toyota Corolla';
+                const renter = document.getElementById('co-cust-name')?.value || 'Patrick Johnson';
+                rollOverToNextContract(completedRa, veh, renter);
+            }
         }
 
         
@@ -4640,17 +4722,115 @@
             showToast('Customer information auto-filled: Patrick Johnson');
         }
 
-        function calcCheckoutTotals() {
+        // Step 3: Two-Way Duration & Calendar Synchronizer
+        function setCheckoutDays(days) {
+            days = Math.max(1, parseInt(days) || 1);
+            const daysInput = document.getElementById('co-rental-days');
+            if (daysInput) daysInput.value = days;
+
+            // Highlight active preset button
+            document.querySelectorAll('.co-day-preset').forEach(btn => {
+                btn.className = "co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95";
+            });
+            const activePreset = document.getElementById(`preset-day-${days}`);
+            if (activePreset) {
+                activePreset.className = "co-day-preset px-2.5 py-1 bg-sky-600 text-white font-bold rounded-lg shadow-sm transition hover:bg-sky-500 active:scale-95";
+            }
+
+            syncReturnDateFromDays(days);
+            calcCheckoutTotals(days);
+        }
+
+        function adjustCheckoutDays(delta) {
+            const daysInput = document.getElementById('co-rental-days');
+            let current = parseInt(daysInput?.value) || 1;
+            let next = Math.max(1, current + delta);
+            setCheckoutDays(next);
+        }
+
+        function onCheckoutDaysInput() {
+            const daysInput = document.getElementById('co-rental-days');
+            let days = Math.max(1, parseInt(daysInput?.value) || 1);
+            
+            // Update preset highlights
+            document.querySelectorAll('.co-day-preset').forEach(btn => {
+                btn.className = "co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95";
+            });
+            const activePreset = document.getElementById(`preset-day-${days}`);
+            if (activePreset) {
+                activePreset.className = "co-day-preset px-2.5 py-1 bg-sky-600 text-white font-bold rounded-lg shadow-sm transition hover:bg-sky-500 active:scale-95";
+            }
+
+            syncReturnDateFromDays(days);
+            calcCheckoutTotals(days);
+        }
+
+        function syncReturnDateFromDays(days) {
             const startInput = document.getElementById('co-date-start');
             const endInput = document.getElementById('co-date-end');
-            
-            let days = 7;
-            if (startInput && endInput && startInput.value && endInput.value) {
-                const d1 = new Date(startInput.value);
-                const d2 = new Date(endInput.value);
-                const diffTime = d2 - d1;
-                const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-                days = Math.max(1, diffDays || 1);
+            if (!startInput || !endInput) return;
+
+            let startDate = startInput.value ? new Date(startInput.value + 'T00:00:00') : new Date();
+            let endDate = new Date(startDate.getTime() + (days * 24 * 60 * 60 * 1000));
+
+            const yyyy = endDate.getFullYear();
+            const mm = String(endDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(endDate.getDate()).padStart(2, '0');
+            endInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        function onCheckoutCalendarChanged(source) {
+            const startInput = document.getElementById('co-date-start');
+            const endInput = document.getElementById('co-date-end');
+            const daysInput = document.getElementById('co-rental-days');
+
+            if (!startInput || !endInput || !startInput.value || !endInput.value) return;
+
+            const d1 = new Date(startInput.value + 'T00:00:00');
+            const d2 = new Date(endInput.value + 'T00:00:00');
+            let diffDays = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+
+            if (diffDays < 1) {
+                diffDays = 1;
+                const nextDate = new Date(d1.getTime() + (1 * 24 * 60 * 60 * 1000));
+                const yyyy = nextDate.getFullYear();
+                const mm = String(nextDate.getMonth() + 1).padStart(2, '0');
+                const dd = String(nextDate.getDate()).padStart(2, '0');
+                endInput.value = `${yyyy}-${mm}-${dd}`;
+            }
+
+            if (daysInput) daysInput.value = diffDays;
+
+            // Update preset highlights
+            document.querySelectorAll('.co-day-preset').forEach(btn => {
+                btn.className = "co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95";
+            });
+            const activePreset = document.getElementById(`preset-day-${diffDays}`);
+            if (activePreset) {
+                activePreset.className = "co-day-preset px-2.5 py-1 bg-sky-600 text-white font-bold rounded-lg shadow-sm transition hover:bg-sky-500 active:scale-95";
+            }
+
+            calcCheckoutTotals(diffDays);
+        }
+
+        function calcCheckoutTotals(explicitDays) {
+            let days = explicitDays;
+            if (!days) {
+                const daysInput = document.getElementById('co-rental-days');
+                if (daysInput && daysInput.value) {
+                    days = Math.max(1, parseInt(daysInput.value) || 1);
+                } else {
+                    const startInput = document.getElementById('co-date-start');
+                    const endInput = document.getElementById('co-date-end');
+                    if (startInput && endInput && startInput.value && endInput.value) {
+                        const d1 = new Date(startInput.value + 'T00:00:00');
+                        const d2 = new Date(endInput.value + 'T00:00:00');
+                        const diffDays = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+                        days = Math.max(1, diffDays || 1);
+                    } else {
+                        days = 1;
+                    }
+                }
             }
 
             const daysDisp = document.getElementById('co-days-disp');
@@ -4669,27 +4849,189 @@
             const tax = subtotal * 0.13;
             const total = subtotal + tax;
 
-            if (daysDisp) daysDisp.innerText = `${days} Days`;
+            if (daysDisp) daysDisp.innerText = `${days} ${days === 1 ? 'Day' : 'Days'}`;
             if (calcDays) calcDays.innerText = days;
             if (calcRate) calcRate.innerText = `$${rate.toFixed(2)}`;
             if (calcBase) calcBase.innerText = `$${base.toFixed(2)}`;
             if (calcCdw) calcCdw.innerText = `$${cdw.toFixed(2)}`;
             if (calcTax) calcTax.innerText = `$${tax.toFixed(2)}`;
             if (calcTotal) calcTotal.innerText = `$${total.toFixed(2)}`;
+
+            // Sync with Print modal rows
+            const prBaseLabel = document.getElementById('print-cell-base-label');
+            const prBaseAmt = document.getElementById('print-cell-base-amt');
+            const prCdwLabel = document.getElementById('print-cell-cdw-label');
+            const prCdwAmt = document.getElementById('print-cell-cdw-amt');
+            const prTaxAmt = document.getElementById('print-cell-tax-amt');
+            const prTotalLabel = document.getElementById('print-cell-total-label');
+            const prTotalAmt = document.getElementById('print-cell-total-amt');
+
+            if (prBaseLabel) prBaseLabel.innerText = `DAYS @ $${rate.toFixed(2)} (x ${days} ${days === 1 ? 'Day' : 'Days'})`;
+            if (prBaseAmt) prBaseAmt.innerText = `$${base.toFixed(2)}`;
+            if (prCdwLabel) prCdwLabel.innerText = `CDW @ $10.00/day (x ${days} ${days === 1 ? 'Day' : 'Days'})`;
+            if (prCdwAmt) prCdwAmt.innerText = `$${cdw.toFixed(2)}`;
+            if (prTaxAmt) prTaxAmt.innerText = `$${tax.toFixed(2)}`;
+            if (prTotalLabel) prTotalLabel.innerText = `TOTAL CHARGES (${days} ${days === 1 ? 'Day' : 'Days'})`;
+            if (prTotalAmt) prTotalAmt.innerText = `$${total.toFixed(2)}`;
         }
 
-        function completeCheckoutProcedure() {
+        // Global RA Roll-Over and Synchronized Displays
+        function updateAllRaDisplays() {
+            const raStr = `RA #${currentRaNumber}`;
+            const raNumStr = `${currentRaNumber}`;
+
+            const coRaDisp = document.getElementById('co-header-ra-display');
+            if (coRaDisp) coRaDisp.innerText = raStr;
+
+            const headerRa = document.getElementById('header-ra-number');
+            if (headerRa) headerRa.value = raNumStr;
+
+            const sidebarRa = document.getElementById('sidebar-ra-badge');
+            if (sidebarRa) sidebarRa.innerText = `Contract (${raStr})`;
+
+            const quickRa = document.getElementById('quick-card-ra');
+            if (quickRa) quickRa.innerText = `${raStr} - Patrick Johnson`;
+
+            const quickCounter = document.getElementById('quick-counter-ra');
+            if (quickCounter) quickCounter.innerText = `Counter (${raStr})`;
+
+            const counterSub = document.getElementById('counter-contract-sub');
+            if (counterSub) counterSub.innerText = `Contract Agreement #${raNumStr} • Walk-Up Customer • TRY-1 CAR RENTALS`;
+
+            const counterPrintBtn = document.getElementById('counter-print-btn-text');
+            if (counterPrintBtn) counterPrintBtn.innerText = `Print ${raStr}`;
+
+            const prTitle = document.getElementById('print-modal-title');
+            if (prTitle) prTitle.innerText = `Print Agreement (${raStr})`;
+
+            const prNum = document.getElementById('print-ra-number');
+            if (prNum) prNum.innerText = raNumStr;
+
+            const prFooter = document.getElementById('print-footer-ra');
+            if (prFooter) {
+                const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                prFooter.innerText = `${raStr} • Printed: ${today} • Agent: CS-04`;
+            }
+        }
+
+        // Checkout Completion Procedure
+        function completeCheckoutProcedure(shouldPrint = false) {
             const veh = document.getElementById('co-sum-vehicle')?.innerText || '2020 Toyota Corolla';
             const renter = document.getElementById('co-cust-name')?.value || 'Patrick Johnson';
+            const completedRa = currentRaNumber;
 
-            showToast(`Vehicle Check-Out Complete! ${veh} released to ${renter}. Keys handed over!`);
+            // Sync Print Modal with current customer & contract details
+            const prCustName = document.getElementById('print-cust-name');
+            const prVehModel = document.getElementById('print-veh-model');
+            const prDateOut = document.getElementById('print-date-out');
+            const prDateDue = document.getElementById('print-date-due');
+            const prPhone = document.getElementById('print-cust-phone');
+            const prDl = document.getElementById('print-cust-dl');
 
-            setTimeout(() => {
-                switchView('counter');
-                switchContractSubTab('summary');
-                showToast(`Viewing active Agreement RA #3195 for ${renter}`);
-            }, 1000);
+            const custName = document.getElementById('co-cust-name')?.value;
+            const custPhone = document.getElementById('co-cust-phone')?.value;
+            const custDl = document.getElementById('co-cust-dl')?.value;
+            const startDate = document.getElementById('co-date-start')?.value;
+            const endDate = document.getElementById('co-date-end')?.value;
+
+            if (prCustName && custName) prCustName.innerText = custName.toUpperCase();
+            if (prVehModel) prVehModel.innerText = veh;
+            if (prPhone && custPhone) prPhone.innerText = custPhone;
+            if (prDl && custDl) prDl.innerText = custDl;
+            if (prDateOut && startDate) prDateOut.innerText = startDate;
+            if (prDateDue && endDate) prDateDue.innerText = endDate;
+
+            if (shouldPrint) {
+                checkoutJustCompleted = true;
+                openPrintAgreementModal();
+                showToast(`Check-Out Dispatched for ${renter}! Agreement RA #${completedRa} ready to print.`);
+            } else {
+                rollOverToNextContract(completedRa, veh, renter);
+            }
         }
+
+        function triggerPrintAndRollOver() {
+            window.print();
+            if (checkoutJustCompleted) {
+                const completedRa = currentRaNumber;
+                const veh = document.getElementById('co-sum-vehicle')?.innerText || 'Selected Vehicle';
+                const renter = document.getElementById('co-cust-name')?.value || 'Patrick Johnson';
+                closePrintModal(false);
+                rollOverToNextContract(completedRa, veh, renter);
+            } else {
+                closePrintModal(false);
+                showToast(`Agreement RA #${currentRaNumber} printed successfully.`);
+            }
+        }
+
+        function rollOverToNextContract(oldRa, veh, renter) {
+            checkoutJustCompleted = false;
+            
+            // Increment to next RA number
+            currentRaNumber++;
+            updateAllRaDisplays();
+
+            // Reset checkout form cleanly for the next customer
+            resetCheckoutWizardClean();
+
+            // Return to Step 1
+            goToCheckoutStep(1);
+
+            showToast(`✓ Contract RA #${oldRa} completed & dispatched! Rolled over to NEXT Agreement: RA #${currentRaNumber}`);
+        }
+
+        function resetCheckoutWizardClean() {
+            // 1. Reset customer information
+            const custName = document.getElementById('co-cust-name');
+            const custPhone = document.getElementById('co-cust-phone');
+            const custEmail = document.getElementById('co-cust-email');
+            const custDl = document.getElementById('co-cust-dl');
+            const custDlExp = document.getElementById('co-cust-dlexp');
+            const custDob = document.getElementById('co-cust-dob');
+            const custAddress = document.getElementById('co-cust-address');
+
+            if (custName) custName.value = '';
+            if (custPhone) custPhone.value = '';
+            if (custEmail) custEmail.value = '';
+            if (custDl) custDl.value = '';
+            if (custDlExp) custDlExp.value = '';
+            if (custDob) custDob.value = '';
+            if (custAddress) custAddress.value = '';
+
+            // 2. Mark previous vehicle as ON RENT in the dropdown
+            const corollaItem = document.getElementById('co-veh-item-corolla');
+            if (corollaItem) {
+                corollaItem.classList.add('opacity-50', 'pointer-events-none');
+                const badge = corollaItem.querySelector('.co-veh-badge');
+                if (badge) {
+                    badge.className = 'px-2 py-0.5 bg-rose-100 text-rose-800 font-bold text-[10px] rounded-full flex-shrink-0';
+                    badge.innerText = `ON RENT (RA #${currentRaNumber - 1})`;
+                }
+            }
+
+            // 3. Select next available vehicle (2019 Nissan Rogue)
+            selectCustomVehicle('checkout', '2019 Nissan Rogue (ROG 01)', 'Plate: ON-ROG91 • SUV • $49.99/day', '72450');
+
+            // 4. Reset Rental Dates & Duration to 1 Day default
+            const daysInput = document.getElementById('co-rental-days');
+            if (daysInput) daysInput.value = '1';
+            
+            const startInput = document.getElementById('co-date-start');
+            if (startInput) startInput.value = '2026-09-17';
+            syncReturnDateFromDays(1);
+
+            document.querySelectorAll('.co-day-preset').forEach(btn => {
+                btn.className = "co-day-preset px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition active:scale-95";
+            });
+            const p1 = document.getElementById('preset-day-1');
+            if (p1) p1.className = "co-day-preset px-2.5 py-1 bg-sky-600 text-white font-bold rounded-lg shadow-sm transition hover:bg-sky-500 active:scale-95";
+
+            // 5. Recalculate billing totals for 1 day
+            calcCheckoutTotals(1);
+        }
+
+        // Initialize default checkout calculation to 1 Day on script load
+        calcCheckoutTotals(1);
     </script>
 </body>
 </html>
